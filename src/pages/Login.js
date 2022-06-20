@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import rockGlass from '../images/rockGlass.svg';
 import { MIN_PASSWORD_LENGTH } from '../helpers/constants';
 
 export default function Login() {
+  const history = useHistory();
   const [isDisabled, setIsDisabled] = useState(true);
-  // const [emailInput, setEmailInput] = useState('');
-  // const [passwordInput, setPasswordInput] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
 
@@ -40,6 +40,17 @@ export default function Login() {
     if (id === 'password') validatePassword(value);
   };
 
+  const handleClick = () => {
+    const email = document.getElementById('email').value;
+    const user = {
+      email,
+    };
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    history.push('/foods');
+  };
+
   return (
     <div className="meals">
       <span className="logo">TRYBE</span>
@@ -68,7 +79,7 @@ export default function Login() {
         <button
           type="button"
           data-testid="login-submit-btn"
-          onClick={ () => console.log('cliquei') }
+          onClick={ () => handleClick() }
           disabled={ isDisabled }
         >
           Enter
