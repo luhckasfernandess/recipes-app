@@ -33,7 +33,7 @@ export default function Header({ page, searchbar }) {
             </button>)}
       </header>
       <div>
-        { searchInputDisplay && (<Searchbar />) }
+        { searchInputDisplay && (<Searchbar page={ page } />) }
       </div>
     </>
   );

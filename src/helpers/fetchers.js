@@ -1,9 +1,7 @@
-import { API_FOODS_URL } from './constants';
-
-async function getFoodsFromAPI(type, query) {
+async function getFoodsFromAPI(source, type, query) {
   try {
-    // console.log(`${API_FOODS_URL}${type}${query}`);
-    const request = await fetch(`${API_FOODS_URL}${type}${query}`);
+    console.log(`${source}${type}${query}`);
+    const request = await fetch(`${source}${type}${query}`);
     const requestJson = await request.json();
     return requestJson.meals;
   } catch (error) {

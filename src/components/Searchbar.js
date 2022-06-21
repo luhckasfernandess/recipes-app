@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import getFoodsFromAPI from '../helpers/fetchers';
+import { API_FOODS_URL, API_COCKTAILS_URL } from '../helpers/constants';
 
-export default function Searchbar() {
+export default function Searchbar({ page }) {
   const [searchInput, setSearchInput] = React.useState('');
   const [radioValue, setRadioValue] = React.useState('filter.php?i=');
   const [mealsList, setMealsList] = React.useState([]);
@@ -22,7 +24,14 @@ export default function Searchbar() {
     if (radio === 'search.php?f=' && text.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }
-    const updatedList = await getFoodsFromAPI(radio, text);
+    console.log('page', page);
+    const source = () => {
+      if (page === 'Foods') return API_FOODS_URL;
+      if (page === 'Drinks') return API_COCKTAILS_URL;
+    };
+    const endpoint = source();
+    console.log('endpoint', endpoint);
+    const updatedList = await getFoodsFromAPI(endpoint, radio, text);
     setMealsList(updatedList);
   };
 
@@ -78,3 +87,7 @@ export default function Searchbar() {
     </form>
   );
 }
+
+Searchbar.propTypes = {
+  page: PropTypes.string.isRequired,
+};
