@@ -4,7 +4,7 @@ import Header from '../components/Header';
 export default function Profile() {
   return (
     <div className="profile">
-      <Header page="Profile" />
+      <Header page="Profile" searchbar={ false } />
     </div>
   );
 }

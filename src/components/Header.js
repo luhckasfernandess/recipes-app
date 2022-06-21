@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export default function Header({ page }) {
+export default function Header({ page, searchbar }) {
   const [searchInputDisplay, setSearchInputDisplay] = React.useState(false);
 
   useEffect(() => {
@@ -20,16 +20,18 @@ export default function Header({ page }) {
           />
         </Link>
         <h1 data-testid="page-title">{ page }</h1>
-        <button
-          type="button"
-          data-testid="search-top-btn"
-          onClick={ () => setSearchInputDisplay(!searchInputDisplay) }
-        >
-          <img
-            src="../images/searchIcon.svg"
-            alt="click to open search"
-          />
-        </button>
+        { searchbar
+          && (
+            <button
+              type="button"
+              data-testid="search-top-btn"
+              onClick={ () => setSearchInputDisplay(!searchInputDisplay) }
+            >
+              <img
+                src="../images/searchIcon.svg"
+                alt="click to open search"
+              />
+            </button>)}
       </div>
       <div>
         { searchInputDisplay
@@ -46,4 +48,5 @@ export default function Header({ page }) {
 
 Header.propTypes = {
   page: PropTypes.string.isRequired,
+  searchbar: PropTypes.bool.isRequired,
 };

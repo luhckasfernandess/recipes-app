@@ -5,6 +5,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
+import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import Explore from './pages/Explore';
 import ExploreFoods from './pages/ExploreFoods';
@@ -23,7 +24,7 @@ function App() {
         <Route exact path="/foods" component={ Foods } />
         {/* <Route extact path="/foods/{id-da-receita}" />
         <Route extact path="/foods/{id-da-receita}/in-progress" /> */}
-        <Route exact path="/drinks" />
+        <Route exact path="/drinks" component={ Drinks } />
         {/* <Route extact path="/drinks/{id-da-receita}" />
         <Route extact path="/drinks/{id-da-receita}/in-progress" /> */}
         <Route exact path="/explore" component={ Explore } />
