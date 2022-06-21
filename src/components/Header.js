@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import Searchbar from './Searchbar';
 
 export default function Header({ page, searchbar }) {
   const [searchInputDisplay, setSearchInputDisplay] = React.useState(false);
-
-  useEffect(() => {
-    console.log(searchInputDisplay);
-  }, [searchInputDisplay]);
 
   return (
     <>
@@ -36,13 +33,7 @@ export default function Header({ page, searchbar }) {
             </button>)}
       </div>
       <div>
-        { searchInputDisplay
-          && (
-            <input
-              type="text"
-              placeholder="Search"
-              data-testid="search-input"
-            />) }
+        { searchInputDisplay && (<Searchbar />) }
       </div>
     </>
   );
