@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import Searchbar from './Searchbar';
 
 export default function Header({ page, searchbar }) {
   const [searchInputDisplay, setSearchInputDisplay] = React.useState(false);
 
-  useEffect(() => {
-    console.log(searchInputDisplay);
-  }, [searchInputDisplay]);
-
   return (
     <>
-      <div className="header">
+      <header className="header">
         <Link to="/profile">
           <img
             src={ profileIcon }
@@ -34,15 +31,9 @@ export default function Header({ page, searchbar }) {
                 data-testid="search-top-btn"
               />
             </button>)}
-      </div>
+      </header>
       <div>
-        { searchInputDisplay
-          && (
-            <input
-              type="text"
-              placeholder="Search"
-              data-testid="search-input"
-            />) }
+        { searchInputDisplay && (<Searchbar page={ page } />) }
       </div>
     </>
   );
