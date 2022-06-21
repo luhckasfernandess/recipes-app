@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
 
 export default function Header({ page, searchbar }) {
   const [searchInputDisplay, setSearchInputDisplay] = React.useState(false);
@@ -14,7 +16,7 @@ export default function Header({ page, searchbar }) {
       <div className="header">
         <Link to="/profile">
           <img
-            src="../images/profileIcon.svg"
+            src={ profileIcon }
             data-testid="profile-top-btn"
             alt="link to profile page"
           />
@@ -27,7 +29,7 @@ export default function Header({ page, searchbar }) {
               onClick={ () => setSearchInputDisplay(!searchInputDisplay) }
             >
               <img
-                src="../images/searchIcon.svg"
+                src={ searchIcon }
                 alt="click to open search"
                 data-testid="search-top-btn"
               />
@@ -46,7 +48,11 @@ export default function Header({ page, searchbar }) {
   );
 }
 
+Header.defaultProps = {
+  searchbar: false,
+};
+
 Header.propTypes = {
   page: PropTypes.string.isRequired,
-  searchbar: PropTypes.bool.isRequired,
+  searchbar: PropTypes.bool,
 };
