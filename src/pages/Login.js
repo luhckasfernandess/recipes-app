@@ -10,32 +10,32 @@ export default function Login() {
   const [validPassword, setValidPassword] = useState(false);
 
   const validateEmail = (email) => {
-    console.log('val email');
+    // console.log('val email');
     const validateEmailInputRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isplayerEmailValid = validateEmailInputRegex.test(email);
-    console.log(isplayerEmailValid);
+    // console.log(isplayerEmailValid);
     setValidEmail(isplayerEmailValid);
   };
 
   const validatePassword = (password) => {
-    console.log('val pass');
+    // console.log('val pass');
     const isPasswordValid = password.length > MIN_PASSWORD_LENGTH;
-    console.log(isPasswordValid);
+    // console.log(isPasswordValid);
     setValidPassword(isPasswordValid);
   };
 
   useEffect(() => {
     if (validEmail && validPassword) {
-      console.log('setbtn ON');
+      // console.log('setbtn ON');
       setIsDisabled(false);
     } else {
-      console.log('setbtn OFF');
+      // console.log('setbtn OFF');
       setIsDisabled(true);
     }
   }, [validEmail, validPassword]);
 
   const handleChange = ({ target: { id, value } }) => {
-    console.log('value', value);
+    // console.log('value', value);
     if (id === 'email') validateEmail(value);
     if (id === 'password') validatePassword(value);
   };
