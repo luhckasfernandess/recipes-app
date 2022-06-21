@@ -20,21 +20,21 @@ function App() {
     <RecipesProvider>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route extact path="/foods" component={ Foods } />
+        <Route exact path="/foods" component={ Foods } />
         {/* <Route extact path="/foods/{id-da-receita}" />
         <Route extact path="/foods/{id-da-receita}/in-progress" /> */}
-        <Route extact path="/drinks" />
+        <Route exact path="/drinks" />
         {/* <Route extact path="/drinks/{id-da-receita}" />
         <Route extact path="/drinks/{id-da-receita}/in-progress" /> */}
-        <Route extact path="/explore" component={ Explore } />
-        <Route extact path="/explore/foods" component={ ExploreFoods } />
-        <Route extact path="/explore/foods/nationalities" component={ ExpFoodsNat } />
-        <Route extact path="/explore/foods/ingredients" component={ ExpFoodsIng } />
-        <Route extact path="/explore/drinks" component={ ExploreDrinks } />
-        <Route extact path="/explore/drinks/ingredients" component={ ExpDrinksIng } />
-        <Route extact path="/profile" component={ Profile } />
-        <Route extact path="/done-recipes" component={ DoneRecipes } />
-        <Route extact path="/favorite-recipes" component={ Favourites } />
+        <Route exact path="/explore" component={ Explore } />
+        <Route exact path="/explore/foods" component={ ExploreFoods } />
+        <Route exact path="/explore/foods/nationalities" component={ ExpFoodsNat } />
+        <Route exact path="/explore/foods/ingredients" component={ ExpFoodsIng } />
+        <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+        <Route exact path="/explore/drinks/ingredients" component={ ExpDrinksIng } />
+        <Route exact path="/profile" component={ Profile } />
+        <Route exact path="/done-recipes" component={ DoneRecipes } />
+        <Route exact path="/favorite-recipes" component={ Favourites } />
       </Switch>
     </RecipesProvider>
   );
