@@ -24,12 +24,12 @@ export default function Header({ page, searchbar }) {
           && (
             <button
               type="button"
-              data-testid="search-top-btn"
               onClick={ () => setSearchInputDisplay(!searchInputDisplay) }
             >
               <img
                 src="../images/searchIcon.svg"
                 alt="click to open search"
+                data-testid="search-top-btn"
               />
             </button>)}
       </div>
