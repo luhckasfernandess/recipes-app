@@ -8,15 +8,15 @@ export default function Foods() {
 
   const condition = () => {
     // console.log('mealsList', mealsList);
-    if (mealsList.length === 0) {
-      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    }
     // if (mealsList.length === 1) {
     //   return ();
     // }
-    if (mealsList.length > 1) {
-      return mealsList.map((meal, index) => (
-        <Card key={ index } index={ index } recipe={ meal } />));
+    if (mealsList) {
+      if (mealsList.length > 1) {
+        return mealsList.map((meal, index) => (
+          <Card key={ index } index={ index } recipe={ meal } />));
+      }
+      return (<p />);
     }
   };
 

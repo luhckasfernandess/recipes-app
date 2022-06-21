@@ -37,6 +37,6 @@ function Card({ index, recipe }) {
 export default Card;
 
 Card.propTypes = {
-  index: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   recipe: PropTypes.shape().isRequired,
 };

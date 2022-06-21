@@ -21,6 +21,9 @@ export default function Searchbar({ page }) {
   };
 
   const handleClick = async (radio, text) => {
+    // if (mealsList.length === 1) {
+    //   return ();
+    // }
     if (radio === 'search.php?f=' && text.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }

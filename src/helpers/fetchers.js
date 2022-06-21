@@ -6,9 +6,10 @@ async function getFoodsFromAPI(source, type, query) {
     const request = await fetch(`${source}${type}${query}`);
     const requestJson = await request.json();
     if (source === API_FOODS_URL) {
-      const list = requestJson.meals;
-      const slicedList = list.slice(0, MAX_LIST_LENGTH);
-      return slicedList;
+      if (requestJson[meals].length > MAX_LIST_LENGTH) {
+        return requestJson[meals].slice(0, MAX_LIST_LENGTH);
+      }
+      return requestJson.meals;
     }
     if (source === API_COCKTAILS_URL) {
       const list = requestJson.drinks;
@@ -16,7 +17,8 @@ async function getFoodsFromAPI(source, type, query) {
       return slicedList;
     }
   } catch (error) {
-    console.log(error);
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    // console.log(error);
   }
 }
 export default getFoodsFromAPI;
