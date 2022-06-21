@@ -10,7 +10,7 @@ export default function Header({ page, searchbar }) {
 
   return (
     <>
-      <div className="header">
+      <header className="header">
         <Link to="/profile">
           <img
             src={ profileIcon }
@@ -31,7 +31,7 @@ export default function Header({ page, searchbar }) {
                 data-testid="search-top-btn"
               />
             </button>)}
-      </div>
+      </header>
       <div>
         { searchInputDisplay && (<Searchbar />) }
       </div>
