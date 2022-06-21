@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import getFoodsFromAPI from '../helpers/fetchers';
 import { API_FOODS_URL, API_COCKTAILS_URL } from '../helpers/constants';
+import RecipesContext from '../context/RecipesContext';
 
 export default function Searchbar({ page }) {
+  const { setMealsList } = useContext(RecipesContext);
   const [searchInput, setSearchInput] = React.useState('');
   const [radioValue, setRadioValue] = React.useState('filter.php?i=');
-  const [mealsList, setMealsList] = React.useState([]);
 
   useEffect(() => {
-    console.log('searchInput', searchInput);
-    console.log('radioValue', radioValue);
-    console.log('mealsList', mealsList);
-  }, [radioValue, searchInput, mealsList]);
+    // console.log('searchInput', searchInput);
+    // console.log('radioValue', radioValue);
+  }, [radioValue, searchInput]);
   // delete before commit
 
   const handleChange = ({ target }) => {
@@ -30,7 +30,7 @@ export default function Searchbar({ page }) {
       if (page === 'Drinks') return API_COCKTAILS_URL;
     };
     const endpoint = source();
-    console.log('endpoint', endpoint);
+    // console.log('endpoint', endpoint);
     const updatedList = await getFoodsFromAPI(endpoint, radio, text);
     setMealsList(updatedList);
   };
