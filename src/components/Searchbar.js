@@ -1,13 +1,15 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import getFoodsFromAPI from '../helpers/fetchers';
 import { API_FOODS_URL, API_COCKTAILS_URL } from '../helpers/constants';
 import RecipesContext from '../context/RecipesContext';
 
 export default function Searchbar({ page }) {
-  const { setMealsList } = useContext(RecipesContext);
+  const { mealsList, setMealsList } = useContext(RecipesContext);
   const [searchInput, setSearchInput] = React.useState('');
   const [radioValue, setRadioValue] = React.useState('filter.php?i=');
+  const history = useHistory();
 
   useEffect(() => {
     // console.log('searchInput', searchInput);
@@ -27,7 +29,7 @@ export default function Searchbar({ page }) {
     if (radio === 'search.php?f=' && text.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }
-    console.log('page', page);
+    // console.log('page', page);
     const source = () => {
       if (page === 'Foods') return API_FOODS_URL;
       if (page === 'Drinks') return API_COCKTAILS_URL;
@@ -37,6 +39,14 @@ export default function Searchbar({ page }) {
     const updatedList = await getFoodsFromAPI(endpoint, radio, text);
     setMealsList(updatedList);
   };
+
+  useEffect(() => {
+    if (mealsList && mealsList.length === 1) {
+      if (page === 'Foods') {
+        history.push(`/foods/${mealsList[0].idMeal}`);
+      } else history.push(`/drinks/${mealsList[0].idDrink}`);
+    }
+  }, [mealsList, history, page]);
 
   return (
     <form className="searchbar">
