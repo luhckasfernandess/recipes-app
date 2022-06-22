@@ -12,7 +12,7 @@ export default function Foods() {
   const condition = () => {
     if (mealsList) {
       return mealsList.map((meal, index) => (
-        <Card key={ index } index={ index } recipe={ meal } />));
+        <Card key={ index } index={ index } recipe={ meal } page="Foods" />));
     } return (<p />);
   };
 

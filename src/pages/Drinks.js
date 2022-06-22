@@ -19,7 +19,7 @@ export default function Drinks() {
       }
       if (mealsList.length > 1) {
         return mealsList.map((meal, index) => (
-          <Card key={ index } index={ index } recipe={ meal } />));
+          <Card key={ index } index={ index } recipe={ meal } page="Drinks" />));
       }
       return (<p />);
     }
