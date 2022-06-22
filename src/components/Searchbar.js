@@ -1,13 +1,15 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import getFoodsFromAPI from '../helpers/fetchers';
 import { API_FOODS_URL, API_COCKTAILS_URL } from '../helpers/constants';
 import RecipesContext from '../context/RecipesContext';
 
 export default function Searchbar({ page }) {
-  const { setMealsList } = useContext(RecipesContext);
+  const { mealsList, setMealsList } = useContext(RecipesContext);
   const [searchInput, setSearchInput] = React.useState('');
   const [radioValue, setRadioValue] = React.useState('filter.php?i=');
+  const history = useHistory();
 
   useEffect(() => {
     // console.log('searchInput', searchInput);
@@ -37,6 +39,12 @@ export default function Searchbar({ page }) {
     const updatedList = await getFoodsFromAPI(endpoint, radio, text);
     setMealsList(updatedList);
   };
+
+  useEffect(() => {
+    if (mealsList && mealsList.length === 1) {
+      history.push(`/foods/${mealsList[0].idMeal}`);
+    }
+  }, [mealsList, history]);
 
   return (
     <form className="searchbar">

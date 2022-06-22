@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
@@ -10,19 +9,11 @@ import CategoryMenu from '../components/CategoryMenu';
 
 export default function Foods() {
   const { mealsList, setMealsList } = useContext(RecipesContext);
-  const history = useHistory();
-
   const condition = () => {
     if (mealsList) {
-      if (mealsList.length === 1) {
-        history.push(`/foods/${mealsList[0].idMeal}`);
-      }
-      if (mealsList.length > 1) {
-        return mealsList.map((meal, index) => (
-          <Card key={ index } index={ index } recipe={ meal } />));
-      }
-      return (<p />);
-    }
+      return mealsList.map((meal, index) => (
+        <Card key={ index } index={ index } recipe={ meal } />));
+    } return (<p />);
   };
 
   useEffect(() => {
