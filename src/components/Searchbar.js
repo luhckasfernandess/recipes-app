@@ -27,7 +27,7 @@ export default function Searchbar({ page }) {
     if (radio === 'search.php?f=' && text.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }
-    console.log('page', page);
+    // console.log('page', page);
     const source = () => {
       if (page === 'Foods') return API_FOODS_URL;
       if (page === 'Drinks') return API_COCKTAILS_URL;
