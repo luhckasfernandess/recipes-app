@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Card from '../components/Card';
+import Footer from '../components/Footer';
 import RecipesContext from '../context/RecipesContext';
 
 export default function Foods() {
@@ -25,6 +26,7 @@ export default function Foods() {
     <div className="foods">
       <Header page="Foods" searchbar />
       { condition() }
+      <Footer />
     </div>
   );
 }
