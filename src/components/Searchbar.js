@@ -42,9 +42,11 @@ export default function Searchbar({ page }) {
 
   useEffect(() => {
     if (mealsList && mealsList.length === 1) {
-      history.push(`/foods/${mealsList[0].idMeal}`);
+      if (page === 'Foods') {
+        history.push(`/foods/${mealsList[0].idMeal}`);
+      } else history.push(`/drinks/${mealsList[0].idDrink}`);
     }
-  }, [mealsList, history]);
+  }, [mealsList, history, page]);
 
   return (
     <form className="searchbar">
