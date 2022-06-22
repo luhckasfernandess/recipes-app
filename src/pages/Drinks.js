@@ -6,6 +6,7 @@ import RecipesContext from '../context/RecipesContext';
 import Footer from '../components/Footer';
 import { API_COCKTAILS_URL } from '../helpers/constants';
 import getFoodsFromAPI from '../helpers/fetchers';
+import CategoryMenu from '../components/CategoryMenu';
 
 export default function Drinks() {
   const { mealsList, setMealsList } = useContext(RecipesContext);
@@ -24,19 +25,19 @@ export default function Drinks() {
     }
   };
 
-  const defaultList = async () => {
-    const updatedList = await getFoodsFromAPI(API_COCKTAILS_URL, 'search.php?s=', '');
-    return setMealsList(updatedList);
-  };
-
   useEffect(() => {
-    console.log('Carregou FOODS');
+    console.log('Carregou DRINKS');
+    const defaultList = async () => {
+      const updatedList = await getFoodsFromAPI(API_COCKTAILS_URL, 'search.php?s=', '');
+      return setMealsList(updatedList);
+    };
     defaultList();
-  }, []);
+  }, [setMealsList]);
 
   return (
     <div className="drinks">
       <Header page="Drinks" searchbar />
+      <CategoryMenu source={ API_COCKTAILS_URL } />
       { condition() }
       <Footer />
     </div>
