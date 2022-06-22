@@ -6,11 +6,13 @@ import { MAX_CATEGORY_LIST_LENGTH, MAX_LIST_LENGTH } from '../helpers/constants'
 
 export default function CategoryMenu({ source }) {
   const [categoryList, setCategoryList] = useState([]);
+  const [activeFilter, setActiveFilter] = useState('All');
   const { setMealsList } = useContext(RecipesContext);
 
   useEffect(() => {
     const defaultList = async () => {
       const updatedList = await getFoodsFromAPI(source, 'list.php?c=', 'list');
+      console.log(updatedList);
       const newList = updatedList.slice(0, MAX_CATEGORY_LIST_LENGTH);
       setCategoryList(newList);
     };
@@ -18,9 +20,16 @@ export default function CategoryMenu({ source }) {
   }, [setCategoryList, source]);
 
   const filterByCategory = async (category) => {
-    const updatedList = await getFoodsFromAPI(source, 'filter.php?c=', category);
-    const newList = updatedList.slice(0, MAX_LIST_LENGTH);
-    setMealsList(newList);
+    if (activeFilter === category || category === 'All') {
+      const updatedList = await getFoodsFromAPI(source, 'search.php?s=', '');
+      setMealsList(updatedList);
+      setActiveFilter('All');
+    } else {
+      const updatedList = await getFoodsFromAPI(source, 'filter.php?c=', category);
+      const newList = updatedList.slice(0, MAX_LIST_LENGTH);
+      setMealsList(newList);
+      setActiveFilter(category);
+    }
   };
 
   let list;
@@ -38,7 +47,18 @@ export default function CategoryMenu({ source }) {
     ));
   } else list = <p>Loading</p>;
 
-  return (<div>{ list }</div>);
+  return (
+    <div>
+      { list }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => filterByCategory('All') }
+      >
+        All
+      </button>
+    </div>
+  );
 }
 
 CategoryMenu.propTypes = {
