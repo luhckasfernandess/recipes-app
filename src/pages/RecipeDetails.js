@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import getFoodsFromAPI from '../helpers/fetchers';
+import { API_COCKTAILS_URL, API_FOODS_URL } from '../helpers/constants';
 
-function RecipeDetails() {
+function RecipeDetails(props) {
+  const { match: { params: { id }, path } } = props;
+  const [recipeInfo, setRecipeInfo] = useState([]);
+  console.log(recipeInfo);
+  useEffect(() => {
+    const requestApi = async () => {
+      if (path.includes('foods')) {
+        const recipe = await getFoodsFromAPI(API_FOODS_URL, 'lookup.php?i=', id);
+        setRecipeInfo(recipe);
+      } else {
+        const recipe = getFoodsFromAPI(API_COCKTAILS_URL, 'lookup.php?i=', id);
+        setRecipeInfo(recipe);
+      }
+    };
+    requestApi();
+  }, []);
+
   return (
     <div>
       <p />
@@ -66,5 +85,16 @@ function RecipeDetails() {
 
   );
 }
+RecipeDetails.defaultProps = {
+  params: {},
+  id: '',
+  path: '',
+};
+RecipeDetails.propTypes = {
+  match: PropTypes.shape().isRequired,
+  params: PropTypes.shape(),
+  id: PropTypes.string,
+  path: PropTypes.string,
+};
 
 export default RecipeDetails;
