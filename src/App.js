@@ -15,6 +15,7 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import ExpDrinksIng from './pages/ExpDrinksIng';
 import DoneRecipes from './pages/DoneRecipes';
 import Favorites from './pages/Favorites';
+import RecipeDetails from './pages/RecipeDetails';
 
 function App() {
   return (
@@ -22,10 +23,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/foods" component={ Foods } />
-        <Route extact path="/foods/:id" />
+        <Route extact path="/foods/:id" component={ RecipeDetails } />
         {/* <Route extact path="/foods/{id-da-receita}/in-progress" /> */}
         <Route exact path="/drinks" component={ Drinks } />
-        <Route extact path="/drinks/:id" />
+        <Route extact path="/drinks/:id" component={ RecipeDetails } />
         {/* <Route extact path="/drinks/{id-da-receita}/in-progress" /> */}
         <Route exact path="/explore" component={ Explore } />
         <Route exact path="/explore/foods" component={ ExploreFoods } />
