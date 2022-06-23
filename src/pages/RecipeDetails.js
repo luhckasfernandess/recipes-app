@@ -6,7 +6,8 @@ import { API_COCKTAILS_URL, API_FOODS_URL } from '../helpers/constants';
 function RecipeDetails(props) {
   const { match: { params: { id }, path } } = props;
   const [recipeInfo, setRecipeInfo] = useState([]);
-  console.log(recipeInfo);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const requestApi = async () => {
       if (path.includes('foods')) {
@@ -16,72 +17,76 @@ function RecipeDetails(props) {
         const recipe = getFoodsFromAPI(API_COCKTAILS_URL, 'lookup.php?i=', id);
         setRecipeInfo(recipe);
       }
+      setLoading(false);
     };
     requestApi();
   }, []);
 
   return (
-    <div>
-      <p />
-      <img data-testid="recipe-photo" src="hh" alt="" />
-      <h2 data-testid="recipe-title">Titulo</h2>
-      <button
-        data-testid="share-btn"
-        type="button"
-      >
-        Compartilhar
-      </button>
-
-      <button
-        data-testid="favorite-btn"
-        type="button"
-      >
-        Favoritar
-      </button>
-
-      <p data-testid="recipe-category" />
-
-      <ul>
-        <li
-          data-testid="0-ingredient-name-and-measure"
+    loading ? <p>loading</p> : (
+      <div>
+        <p />
+        <img data-testid="recipe-photo" src="hh" alt="" />
+        <h2 data-testid="recipe-title">{ recipeInfo[0].strMeal }</h2>
+        <button
+          data-testid="share-btn"
+          type="button"
         >
-          Ingredientes
-        </li>
-      </ul>
-      <p data-testid="instructions">texto de instruções</p>
+          Compartilhar
+        </button>
 
-      <video
-        width="320"
-        height="240"
-        controls
-        data-testid="video"
-      >
-        <source
-          src="movie.mp4"
-          type="video/mp4"
+        <button
+          data-testid="favorite-btn"
+          type="button"
+        >
+          Favoritar
+        </button>
 
-        />
-        <track
-          default
-          kind="captions"
-          srcLang="en"
-          src="/media/examples/friday.vtt"
-        />
-        Your browser does not support the video tag.
-      </video>
-      <div
-        data-testid="0-recomendation-card"
-      >
-        <p data-testid="0-recomendation-title">Titulo</p>
-        Card
+        <p data-testid="recipe-category" />
+
+        <ul>
+          <li
+            data-testid="0-ingredient-name-and-measure"
+          >
+            Ingredientes
+          </li>
+        </ul>
+        <p data-testid="instructions">texto de instruções</p>
+
+        <video
+          width="320"
+          height="240"
+          controls
+          data-testid="video"
+        >
+          <source
+            src="movie.mp4"
+            type="video/mp4"
+
+          />
+          <track
+            default
+            kind="captions"
+            srcLang="en"
+            src="/media/examples/friday.vtt"
+          />
+          Your browser does not support the video tag.
+        </video>
+        <div
+          data-testid="0-recomendation-card"
+        >
+          <p data-testid="0-recomendation-title">Titulo</p>
+          Card
+        </div>
+        <button
+          data-testid="start-recipe-btn"
+          type="button"
+        >
+          Iniciar
+        </button>
       </div>
-      <button
-        data-testid="start-recipe-btn"
-        type="button"
-      >
-        Iniciar
-      </button>
-    </div>
+
+    )
 
   );
 }
