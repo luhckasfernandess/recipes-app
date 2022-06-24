@@ -41,6 +41,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
       <div>
         <p />
         <img
+          className="recipe-photo"
           data-testid="recipe-photo"
           src={ recipeInfo[0][`str${objKey}Thumb`] }
           alt=""
