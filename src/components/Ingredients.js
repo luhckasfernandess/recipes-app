@@ -25,7 +25,7 @@ function Ingredients({ recipeInfo }) {
 
   useEffect(() => {
     if (ingredients.length !== measurements.length) {
-      const newMeasurement = [`strMeasure${ingredients.length + 1}`, ' '];
+      const newMeasurement = [`strMeasure${ingredients.length + 1}`, '  '];
       setMeasurements([...measurements, newMeasurement]);
     }
   }, [ingredients, measurements]);
