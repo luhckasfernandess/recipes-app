@@ -78,7 +78,9 @@ function RecipeDetails({ match: { params: { id }, path } }) {
               allowFullScreen
             />
           )}
-        <Recomendations objKey={ objKey } />
+        <div className="recommendations-menu">
+          <Recomendations objKey={ objKey } />
+        </div>
         <button
           data-testid="start-recipe-btn"
           type="button"

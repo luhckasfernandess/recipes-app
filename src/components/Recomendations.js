@@ -25,18 +25,31 @@ function Recomendations({ objKey }) {
 
   return (
     recomendations.length === 0 ? <p>Loading . . .</p> : (
-      recomendations.map((card, index) => (
-        <div
-          data-testid={ `${index}-recomendation-card` }
-          key={ index }
-        >
-          <p
-            data-testid={ `${index}-recomendation-title` }
+      recomendations.map((card, index) => {
+        let recipeName;
+        if (objKey === 'Meal') {
+          recipeName = card.strDrink;
+        } else recipeName = card.strMeal;
+
+        return (
+          <div
+            className="recommendations-card"
+            data-testid={ `${index}-recomendation-card` }
+            key={ index }
           >
-            {objKey === 'Meal' ? `${card.strDrink}` : `${card.strMeal}` }
-          </p>
-        </div>
-      ))
+            <img
+              className="recommendations-picture"
+              src={ objKey === 'Meal' ? `${card.strDrinkThumb}` : `${card.strMealThumb}` }
+              alt={ recipeName }
+            />
+            <p
+              data-testid={ `${index}-recomendation-title` }
+            >
+              {recipeName}
+            </p>
+          </div>
+        );
+      })
     ));
 }
 
