@@ -4,7 +4,7 @@ footer {
   position: fixed;
 }
 
-div.recomendation-menu {
+.recomendation-menu {
   background-color: #333;
   display: inline-block;
   overflow: hidden;
@@ -12,7 +12,7 @@ div.recomendation-menu {
   width: 100%;
 }
 
-div.recomendation-menu .recomendation-card {
+.recomendation-menu .recomendation-card {
   color: white;
   display: inline-block;
   overflow: hidden;
@@ -22,6 +22,6 @@ div.recomendation-menu .recomendation-card {
   width: 50%;
 }
 
-div.recomendation-menu .recomendation-card:hover {
+.recomendation-menu .recomendation-card:hover {
   background-color: #777;
 }
