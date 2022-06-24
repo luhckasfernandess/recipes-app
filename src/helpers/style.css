@@ -27,6 +27,6 @@ footer {
 }
 
 .start-recipe-btn {
-  position: fixed;
   bottom: 0;
+  position: fixed;
 }
