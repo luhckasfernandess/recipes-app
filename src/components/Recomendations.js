@@ -4,6 +4,12 @@ import getFoodsFromAPI from '../helpers/fetchers';
 import { API_COCKTAILS_URL, API_FOODS_URL,
   MAX_RECOMENDATIONS_LENGTH } from '../helpers/constants';
 
+const Redirect = (card, objKey) => {
+  if (objKey === 'Meal') {
+    return `/drinks/${card.idDrink}`;
+  } return `/foods/${card.idMeal}`;
+};
+
 function Recomendations({ objKey }) {
   const [recomendations, setRecomendations] = useState([]);
 
@@ -12,12 +18,10 @@ function Recomendations({ objKey }) {
       if (objKey === 'Meal') {
         const cards = await getFoodsFromAPI(API_COCKTAILS_URL, 'search.php?s=', '');
         setRecomendations(cards.slice(0, MAX_RECOMENDATIONS_LENGTH));
-        console.log(cards.slice(0, MAX_RECOMENDATIONS_LENGTH));
       }
       if (objKey === 'Drink') {
         const cards = await getFoodsFromAPI(API_FOODS_URL, 'search.php?s=', '');
         setRecomendations(cards.slice(0, MAX_RECOMENDATIONS_LENGTH));
-        console.log(cards.slice(0, MAX_RECOMENDATIONS_LENGTH));
       }
     };
     requestApi();
@@ -32,7 +36,8 @@ function Recomendations({ objKey }) {
         } else recipeName = card.strMeal;
 
         return (
-          <div
+          <a
+            href={ Redirect(card, objKey) }
             className="recommendations-card"
             data-testid={ `${index}-recomendation-card` }
             key={ index }
@@ -47,7 +52,7 @@ function Recomendations({ objKey }) {
             >
               {recipeName}
             </p>
-          </div>
+          </a>
         );
       })
     ));

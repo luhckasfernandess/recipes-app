@@ -35,3 +35,8 @@ footer {
 .recommendations-picture {
   width: 100%;
 }
+
+.start-recipe-btn {
+  bottom: 0;
+  position: fixed;
+}
