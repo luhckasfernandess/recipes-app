@@ -2,32 +2,49 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import getFoodsFromAPI from '../helpers/fetchers';
 import { API_COCKTAILS_URL, API_FOODS_URL } from '../helpers/constants';
+import Ingredients from '../components/Ingredients';
+import Recomendations from '../components/Recomendations';
 
-function RecipeDetails(props) {
-  const { match: { params: { id }, path } } = props;
+function RecipeDetails({ match: { params: { id }, path } }) {
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [objKey, setObjKey] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
 
   useEffect(() => {
     const requestApi = async () => {
       if (path.includes('foods')) {
+        setObjKey('Meal');
         const recipe = await getFoodsFromAPI(API_FOODS_URL, 'lookup.php?i=', id);
         setRecipeInfo(recipe);
+        setLoading(false);
       } else {
-        const recipe = getFoodsFromAPI(API_COCKTAILS_URL, 'lookup.php?i=', id);
+        setObjKey('Drink');
+        const recipe = await getFoodsFromAPI(API_COCKTAILS_URL, 'lookup.php?i=', id);
         setRecipeInfo(recipe);
+        setLoading(false);
       }
-      setLoading(false);
     };
     requestApi();
   }, []);
 
+  useEffect(() => {
+    if (recipeInfo.length > 0 && objKey === 'Meal') {
+      const videoId = recipeInfo[0].strYoutube.split('=')[1];
+      setVideoUrl(videoId);
+    }
+  }, [recipeInfo, objKey]);
+
   return (
-    loading ? <p>loading</p> : (
+    loading ? <p>Loading . . .</p> : (
       <div>
         <p />
-        <img data-testid="recipe-photo" src="hh" alt="" />
-        <h2 data-testid="recipe-title">{ recipeInfo[0].strMeal }</h2>
+        <img
+          data-testid="recipe-photo"
+          src={ recipeInfo[0][`str${objKey}Thumb`] }
+          alt=""
+        />
+        <h2 data-testid="recipe-title">{ recipeInfo[0][`str${objKey}`] }</h2>
         <button
           data-testid="share-btn"
           type="button"
@@ -41,43 +58,27 @@ function RecipeDetails(props) {
         >
           Favoritar
         </button>
-
-        <p data-testid="recipe-category" />
-
-        <ul>
-          <li
-            data-testid="0-ingredient-name-and-measure"
-          >
-            Ingredientes
-          </li>
-        </ul>
-        <p data-testid="instructions">texto de instruções</p>
-
-        <video
-          width="320"
-          height="240"
-          controls
-          data-testid="video"
-        >
-          <source
-            src="movie.mp4"
-            type="video/mp4"
-
-          />
-          <track
-            default
-            kind="captions"
-            srcLang="en"
-            src="/media/examples/friday.vtt"
-          />
-          Your browser does not support the video tag.
-        </video>
-        <div
-          data-testid="0-recomendation-card"
-        >
-          <p data-testid="0-recomendation-title">Titulo</p>
-          Card
-        </div>
+        <p data-testid="recipe-category">
+          { objKey === 'Drink' ? recipeInfo[0].strAlcoholic : recipeInfo[0].strCategory }
+        </p>
+        <Ingredients recipeInfo={ recipeInfo } />
+        <p data-testid="instructions">{recipeInfo[0].strInstructions}</p>
+        {objKey === 'Meal'
+          && (
+            <iframe
+              data-testid="video"
+              width="560"
+              height="315"
+              src={ `https://www.youtube.com/embed/${videoUrl}` }
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer;
+                autoplay; clipboard-write; encrypted-media;
+                gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          )}
+        <Recomendations objKey={ objKey } />
         <button
           data-testid="start-recipe-btn"
           type="button"
@@ -85,9 +86,7 @@ function RecipeDetails(props) {
           Iniciar
         </button>
       </div>
-
     )
-
   );
 }
 RecipeDetails.defaultProps = {

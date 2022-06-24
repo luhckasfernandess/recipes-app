@@ -26,7 +26,7 @@ export default function Drinks() {
   };
 
   useEffect(() => {
-    console.log('Carregou DRINKS');
+    // console.log('Carregou DRINKS');
     const defaultList = async () => {
       const updatedList = await getFoodsFromAPI(API_COCKTAILS_URL, 'search.php?s=', '');
       return setMealsList(updatedList);

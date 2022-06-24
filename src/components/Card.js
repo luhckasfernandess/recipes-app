@@ -6,7 +6,7 @@ function Card({ index, recipe, page }) {
   // console.log('obj-key-0', Object.keys(recipe)[0]);
   let thumb;
   let title;
-  console.log(recipe);
+  // console.log(recipe);
   if (recipe.strMeal) {
     thumb = recipe.strMealThumb;
     title = recipe.strMeal;
@@ -16,7 +16,7 @@ function Card({ index, recipe, page }) {
     title = recipe.strDrink;
   }
   let newURL;
-  console.log(page);
+  // console.log(page);
   if (page === 'Foods') {
     newURL = `/foods/${recipe.idMeal}`;
   } else newURL = `/drinks/${recipe.idDrink}`;
