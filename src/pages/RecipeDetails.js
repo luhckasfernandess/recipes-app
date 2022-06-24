@@ -4,6 +4,7 @@ import getFoodsFromAPI from '../helpers/fetchers';
 import { API_COCKTAILS_URL, API_FOODS_URL } from '../helpers/constants';
 import Ingredients from '../components/Ingredients';
 import Recomendations from '../components/Recomendations';
+import '../helpers/style.css';
 
 function RecipeDetails({ match: { params: { id }, path } }) {
   const [recipeInfo, setRecipeInfo] = useState([]);
@@ -86,8 +87,9 @@ function RecipeDetails({ match: { params: { id }, path } }) {
         <button
           data-testid="start-recipe-btn"
           type="button"
+          className="start-recipe-btn"
         >
-          Iniciar
+          Start Recipe
         </button>
       </div>
     )

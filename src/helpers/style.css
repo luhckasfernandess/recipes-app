@@ -25,3 +25,8 @@ footer {
 .recomendation-menu .recomendation-card:hover {
   background-color: #777;
 }
+
+.start-recipe-btn {
+  position: fixed;
+  bottom: 0;
+}
