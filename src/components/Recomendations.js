@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import getFoodsFromAPI from '../helpers/fetchers';
 import { API_COCKTAILS_URL, API_FOODS_URL,
   MAX_RECOMENDATIONS_LENGTH } from '../helpers/constants';
+import '../helpers/style.css';
 
 function Recomendations({ objKey }) {
   const [recomendations, setRecomendations] = useState([]);
@@ -12,12 +13,10 @@ function Recomendations({ objKey }) {
       if (objKey === 'Meal') {
         const cards = await getFoodsFromAPI(API_COCKTAILS_URL, 'search.php?s=', '');
         setRecomendations(cards.slice(0, MAX_RECOMENDATIONS_LENGTH));
-        console.log(cards.slice(0, MAX_RECOMENDATIONS_LENGTH));
       }
       if (objKey === 'Drink') {
         const cards = await getFoodsFromAPI(API_FOODS_URL, 'search.php?s=', '');
         setRecomendations(cards.slice(0, MAX_RECOMENDATIONS_LENGTH));
-        console.log(cards.slice(0, MAX_RECOMENDATIONS_LENGTH));
       }
     };
     requestApi();
@@ -27,13 +26,22 @@ function Recomendations({ objKey }) {
     recomendations.length === 0 ? <p>Loading . . .</p> : (
       recomendations.map((card, index) => (
         <div
-          data-testid={ `${index}-recomendation-card` }
           key={ index }
+          data-testid={ `${index}-recomendation-card` }
+          onClick={ () => console.log('cliquei na DIV') }
+          aria-hidden="true"
+          role="button"
+          className="recomendation-card"
         >
+          <img
+            src={ objKey === 'Meal' ? `${card.strDrinkThumb}` : `${card.strMealThumb}` }
+            alt="mojito"
+            hidden
+          />
           <p
             data-testid={ `${index}-recomendation-title` }
           >
-            {objKey === 'Meal' ? `${card.strDrink}` : `${card.strMeal}` }
+            { objKey === 'Meal' ? `${card.strDrink}` : `${card.strMeal}` }
           </p>
         </div>
       ))

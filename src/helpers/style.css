@@ -3,3 +3,25 @@ footer {
   padding-bottom: 3px;
   position: fixed;
 }
+
+div.recomendation-menu {
+  background-color: #333;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+div.recomendation-menu .recomendation-card {
+  color: white;
+  display: inline-block;
+  overflow: hidden;
+  padding: 14px;
+  text-align: center;
+  text-decoration: none;
+  width: 50%;
+}
+
+div.recomendation-menu .recomendation-card:hover {
+  background-color: #777;
+}
