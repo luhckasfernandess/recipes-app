@@ -6,13 +6,13 @@ import Ingredients from '../components/Ingredients';
 import Recomendations from '../components/Recomendations';
 import '../helpers/style.css';
 import StartRecipeBtn from '../components/StartRecipeBtn';
+import ShareBtn from '../components/ShareBtn';
 
 function RecipeDetails({ match: { params: { id }, path } }) {
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [loading, setLoading] = useState(true);
   const [objKey, setObjKey] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
-  // const [recipeState, setRecipeState] = useState(0); // 0 = nunca foi feita, 1 = em progresso, 2 = finalizada.
 
   useEffect(() => {
     const requestApi = async () => {
@@ -49,12 +49,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
           alt=""
         />
         <h2 data-testid="recipe-title">{ recipeInfo[0][`str${objKey}`] }</h2>
-        <button
-          data-testid="share-btn"
-          type="button"
-        >
-          Compartilhar
-        </button>
+        <ShareBtn />
 
         <button
           data-testid="favorite-btn"
