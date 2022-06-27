@@ -5,12 +5,14 @@ import { API_COCKTAILS_URL, API_FOODS_URL } from '../helpers/constants';
 import Ingredients from '../components/Ingredients';
 import Recomendations from '../components/Recomendations';
 import '../helpers/style.css';
+import StartRecipeBtn from '../components/StartRecipeBtn';
 
 function RecipeDetails({ match: { params: { id }, path } }) {
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [loading, setLoading] = useState(true);
   const [objKey, setObjKey] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
+  // const [recipeState, setRecipeState] = useState(0); // 0 = nunca foi feita, 1 = em progresso, 2 = finalizada.
 
   useEffect(() => {
     const requestApi = async () => {
@@ -83,13 +85,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
         <div className="recommendations-menu">
           <Recomendations objKey={ objKey } />
         </div>
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          className="start-recipe-btn"
-        >
-          Start Recipe
-        </button>
+        <StartRecipeBtn recipeInfo={ recipeInfo[0] } recipeType={ objKey } />
       </div>
     )
   );
