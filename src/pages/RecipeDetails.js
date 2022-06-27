@@ -7,6 +7,7 @@ import Recomendations from '../components/Recomendations';
 import '../helpers/style.css';
 import StartRecipeBtn from '../components/StartRecipeBtn';
 import ShareBtn from '../components/ShareBtn';
+import FavoriteBtn from '../components/FavoriteBtn';
 
 function RecipeDetails({ match: { params: { id }, path } }) {
   const [recipeInfo, setRecipeInfo] = useState([]);
@@ -51,12 +52,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
         <h2 data-testid="recipe-title">{ recipeInfo[0][`str${objKey}`] }</h2>
         <ShareBtn />
 
-        <button
-          data-testid="favorite-btn"
-          type="button"
-        >
-          Favoritar
-        </button>
+        <FavoriteBtn recipeInfo={ recipeInfo[0] } recipeType={ objKey } />
         <p data-testid="recipe-category">
           { objKey === 'Drink' ? recipeInfo[0].strAlcoholic : recipeInfo[0].strCategory }
         </p>
