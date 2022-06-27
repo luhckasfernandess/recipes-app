@@ -12,7 +12,7 @@ export default function CategoryMenu({ source }) {
   useEffect(() => {
     const defaultList = async () => {
       const updatedList = await getFoodsFromAPI(source, 'list.php?c=', 'list');
-      console.log(updatedList);
+      // console.log(updatedList);
       const newList = updatedList.slice(0, MAX_CATEGORY_LIST_LENGTH);
       setCategoryList(newList);
     };
