@@ -31,7 +31,7 @@ function FavoriteBtn({ recipeInfo, recipeType }) {
   // console.log(thisRecipe);
 
   const handleClick = () => {
-    console.log('clicou!');
+    // console.log('clicou!');
     let newFavoritesList;
     if (isFavorite) {
       newFavoritesList = favoritesList

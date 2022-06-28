@@ -51,7 +51,7 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
     return newItem;
   };
 
-  console.log(inProgressRecipes);
+  // console.log(inProgressRecipes);
   const newItem = generateInProgressListItem();
   let inProgressRecipesNovo;
   if (recipeType === 'Meal') {
@@ -63,7 +63,7 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
       ...inProgressRecipes,
       cocktails: { ...inProgressRecipes.cocktails, ...newItem } };
   }
-  console.log(inProgressRecipesNovo);
+  // console.log(inProgressRecipesNovo);
 
   let recipeStarted = false;
   if (recipeType === 'Meal') {

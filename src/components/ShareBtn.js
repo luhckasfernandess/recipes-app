@@ -7,7 +7,7 @@ function ShareBtn() {
   const urlEndpoint = history.location.pathname;
   const url = `http://localhost:3000${urlEndpoint}`;
 
-  console.log(url);
+  // console.log(url);
 
   const handleClick = () => {
     navigator.clipboard.writeText(url);

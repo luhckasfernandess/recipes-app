@@ -36,7 +36,7 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
           src={ recipeInfo[0][`str${objKey}Thumb`] }
           data-testid="recipe-photo"
         />
-        <h3 data-testid="recipe-title">{ `str${objKey}` }</h3>
+        <h3 data-testid="recipe-title">{ recipeInfo[0][`str${objKey}`] }</h3>
         <ShareBtn />
         <FavoriteBtn recipeInfo={ recipeInfo[0] } recipeType={ objKey } />
         <h5 data-testid="recipe-category">{ recipeInfo[0].strCategory }</h5>

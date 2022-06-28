@@ -41,7 +41,13 @@ function Ingredients({ recipeInfo, inProgress }) {
                 `${index}-ingredient-${inProgress ? 'step' : 'name-and-measure'}`
               }
             >
-              {`${measurements[index][1]} - ${ingredient[1]}`}
+              {!inProgress ? `${measurements[index][1]} - ${ingredient[1]}`
+                : (
+                  <label htmlFor={ ingredient[1] }>
+                    <input id={ ingredient[1] } type="checkbox" />
+                    {`${measurements[index][1]} - ${ingredient[1]}`}
+                  </label>
+                )}
             </li>
           ))}
         </ul>

@@ -51,7 +51,6 @@ function RecipeDetails({ match: { params: { id }, path } }) {
         />
         <h2 data-testid="recipe-title">{ recipeInfo[0][`str${objKey}`] }</h2>
         <ShareBtn />
-
         <FavoriteBtn recipeInfo={ recipeInfo[0] } recipeType={ objKey } />
         <p data-testid="recipe-category">
           { objKey === 'Drink' ? recipeInfo[0].strAlcoholic : recipeInfo[0].strCategory }
