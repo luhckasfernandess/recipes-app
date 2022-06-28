@@ -13,6 +13,10 @@ export default function Profile() {
   const redirectBtn = ({ target: { name } }) => {
     if (name === 'done') history.push('/done-recipes');
     else if (name === 'favorite') history.push('/favorite-recipes');
+    else if (name === 'logout') {
+      localStorage.clear();
+      history.push('/');
+    }
   };
 
   return (
@@ -42,7 +46,9 @@ export default function Profile() {
       <div>
         <button
           type="button"
+          name="logout"
           data-testid="profile-logout-btn"
+          onClick={ redirectBtn }
         >
           Logout
         </button>
