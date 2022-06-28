@@ -28,7 +28,7 @@ function FavoriteBtn({ recipeInfo, recipeType }) {
 
   useEffect(() => {}, [isFavorite]);
 
-  console.log(thisRecipe);
+  // console.log(thisRecipe);
 
   const handleClick = () => {
     console.log('clicou!');

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function Ingredients({ recipeInfo }) {
+function Ingredients({ recipeInfo, inProgress }) {
   const [ingredients, setIngredients] = useState([]);
   const [measurements, setMeasurements] = useState([]);
 
@@ -16,12 +16,12 @@ function Ingredients({ recipeInfo }) {
         .filter((entry) => entry[1] !== null && entry[1] !== '' && entry[1] !== ' ')
         .filter((entry) => entry[0].includes('strMeasure'));
     }
-    // console.log(recipeInfo[0]);
+    // console.log(inProgress);
     // console.log(ingredientsList);
     // console.log(measurementsList);
     setMeasurements(measurementsList);
     setIngredients(ingredientsList);
-  }, [recipeInfo]);
+  }, [recipeInfo, inProgress]);
 
   useEffect(() => {
     if (ingredients.length !== measurements.length) {
@@ -37,7 +37,9 @@ function Ingredients({ recipeInfo }) {
           {ingredients.map((ingredient, index) => (
             <li
               key={ `${index}-${ingredient[1]}` }
-              data-testid={ `${index}-ingredient-name-and-measure` }
+              data-testid={
+                `${index}-ingredient-${inProgress ? 'step' : 'name-and-measure'}`
+              }
             >
               {`${measurements[index][1]} - ${ingredient[1]}`}
             </li>
@@ -48,8 +50,13 @@ function Ingredients({ recipeInfo }) {
   );
 }
 
+Ingredients.defaultProps = {
+  inProgress: false,
+};
+
 Ingredients.propTypes = {
   recipeInfo: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  inProgress: PropTypes.bool,
 };
 
 export default Ingredients;
