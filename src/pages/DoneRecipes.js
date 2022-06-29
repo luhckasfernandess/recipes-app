@@ -42,7 +42,7 @@ export default function DoneRecipes() {
             <p>
               <span>Category: </span>
               <span data-testid={ `${index}-horizontal-top-text` }>
-                { recipe.category }
+                { `${recipe.alcoholicOrNot} - ${recipe.category}` }
               </span>
             </p>
           ) }
