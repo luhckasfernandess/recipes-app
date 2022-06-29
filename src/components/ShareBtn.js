@@ -1,6 +1,7 @@
 import React, { useState } from 'react';// { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import shareBtnIcon from '../images/shareIcon.svg';
 
 function ShareBtn({ dataTestId }) {
   const [onClipboard, setOnClipboard] = useState(false);
@@ -22,8 +23,9 @@ function ShareBtn({ dataTestId }) {
         data-testid={ dataTestId }
         type="button"
         onClick={ () => handleClick() }
+        src={ shareBtnIcon }
       >
-        Compartilhar
+        <img src={ shareBtnIcon } alt="Share button" />
       </button>
       {onClipboard && (<p>Link copied!</p>)}
     </div>
