@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Checkbox from './Checkbox';
 
 function Ingredients({ recipeInfo, inProgress }) {
   const [ingredients, setIngredients] = useState([]);
@@ -33,24 +34,29 @@ function Ingredients({ recipeInfo, inProgress }) {
   return (
     ingredients.length !== measurements.length ? <p>loading . . .</p> : (
       <div>
-        <ul>
-          {ingredients.map((ingredient, index) => (
-            <li
-              key={ `${index}-${ingredient[1]}` }
-              data-testid={
-                `${index}-ingredient-${inProgress ? 'step' : 'name-and-measure'}`
-              }
-            >
-              {!inProgress ? `${measurements[index][1]} - ${ingredient[1]}`
-                : (
-                  <label htmlFor={ ingredient[1] }>
-                    <input id={ ingredient[1] } type="checkbox" />
-                    {`${measurements[index][1]} - ${ingredient[1]}`}
-                  </label>
-                )}
-            </li>
-          ))}
-        </ul>
+        {
+          !inProgress ? (
+            <ul>
+              {ingredients.map((ingredient, index) => (
+                <li
+                  key={ `${index}-${ingredient[1]}` }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${measurements[index][1]} - ${ingredient[1]}`}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            ingredients.map((ingredient, index) => (
+              <Checkbox
+                key={ `${index}-${ingredient[1]}` }
+                ingredient={ ingredient[1] }
+                measurement={ measurements[index][1] }
+                index={ index }
+              />
+            ))
+          )
+        }
       </div>
     )
   );
