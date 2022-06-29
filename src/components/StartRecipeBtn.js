@@ -35,10 +35,10 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
       return acc;
     }, []);
 
-  // console.log(ingredientsList);...inProgressRecipes,
-
   const generateInProgressListItem = () => {
     let newItem = {};
+
+    console.log(ingredientsList);
     if (recipeType === 'Meal') {
       newItem = {
         [recipeInfo.idMeal]: ingredientsList,
