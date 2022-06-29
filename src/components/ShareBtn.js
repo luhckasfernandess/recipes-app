@@ -1,7 +1,8 @@
 import React, { useState } from 'react';// { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-function ShareBtn() {
+function ShareBtn({ dataTestId }) {
   const [onClipboard, setOnClipboard] = useState(false);
   const history = useHistory();
   const urlEndpoint = history.location.pathname;
@@ -18,7 +19,7 @@ function ShareBtn() {
   return (
     <div>
       <button
-        data-testid="share-btn"
+        data-testid={ dataTestId }
         type="button"
         onClick={ () => handleClick() }
       >
@@ -28,5 +29,13 @@ function ShareBtn() {
     </div>
   );
 }
+
+ShareBtn.defaultProps = {
+  dataTestId: 'share-btn',
+};
+
+ShareBtn.propTypes = {
+  dataTestId: PropTypes.string,
+};
 
 export default ShareBtn;
