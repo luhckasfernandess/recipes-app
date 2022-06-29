@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import ShareBtn from '../components/ShareBtn';
 
 const doneRecipesObj = JSON.parse(localStorage.getItem('doneRecipes'));
-// [{
+// const doneRecipesObj = [{
 //   id: '52977',
 //   type: 'food',
 //   nationality: 'Turkish',
@@ -12,7 +12,7 @@ const doneRecipesObj = JSON.parse(localStorage.getItem('doneRecipes'));
 //   name: 'Corba',
 //   image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
 //   doneDate: Date('June 28, 2022 20:51:00'),
-//   tags: ['Soup', 'Teste'],
+//   tags: ['Soup', 'Teste', 'Excluir', 'Excluir também'],
 // }];
 
 export default function DoneRecipes() {
@@ -30,17 +30,29 @@ export default function DoneRecipes() {
           className="recipe-photo"
           data-testid={ `${index}-horizontal-image` }
         />
-        <p>
-          <span>Category: </span>
-          <span data-testid={ `${index}-horizontal-top-text` }>{ recipe.category }</span>
-        </p>
+        {recipe.type === 'food' ? (
+          <p>
+            <span>Category: </span>
+            <span data-testid={ `${index}-horizontal-top-text` }>
+              { `${recipe.nationality} - ${recipe.category}` }
+            </span>
+          </p>
+        )
+          : (
+            <p>
+              <span>Category: </span>
+              <span data-testid={ `${index}-horizontal-top-text` }>
+                { recipe.category }
+              </span>
+            </p>
+          ) }
         <p>
           <span>Done in: </span>
           <span data-testid={ `${index}-horizontal-done-date` }>{ recipe.doneDate }</span>
         </p>
         <p>
           <span>Tags: </span>
-          { recipe.tags.map((tag) => (
+          { recipe.tags.splice(0, 2).map((tag) => (
             <span
               key={ tag }
               data-testid={ `${index}-${tag}-horizontal-tag` }
