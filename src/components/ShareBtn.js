@@ -1,19 +1,17 @@
 import React, { useState } from 'react';// { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import shareBtnIcon from '../images/shareIcon.svg';
 
 function ShareBtn({ dataTestId, urlToShare }) {
   const [onClipboard, setOnClipboard] = useState(false);
-  // const history = useHistory();
-  // const urlEndpoint = history.location.pathname;
-  // const url = `http://localhost:3000${urlEndpoint}`;
-
-  // console.log(url);
+  const history = useHistory();
+  const urlEndpoint = history.location.pathname;
+  const url = `http://localhost:3000${urlEndpoint}`;
 
   const handleClick = () => {
-    console.log(urlToShare);
-    navigator.clipboard.writeText(urlToShare);
+    console.log(!urlToShare ? url : urlToShare);
+    navigator.clipboard.writeText(!urlToShare ? url : urlToShare);
     // global.alert('Link copied!');
     setOnClipboard(true);
   };
@@ -35,11 +33,12 @@ function ShareBtn({ dataTestId, urlToShare }) {
 
 ShareBtn.defaultProps = {
   dataTestId: 'share-btn',
+  urlToShare: null,
 };
 
 ShareBtn.propTypes = {
   dataTestId: PropTypes.string,
-  urlToShare: PropTypes.string.isRequired,
+  urlToShare: PropTypes.string,
 };
 
 export default ShareBtn;

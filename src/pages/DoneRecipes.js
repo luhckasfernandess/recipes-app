@@ -61,7 +61,10 @@ export default function DoneRecipes() {
             </span>
           ))}
         </p>
-        <ShareBtn dataTestId={ `${index}-horizontal-share-btn` } />
+        <ShareBtn
+          dataTestId={ `${index}-horizontal-share-btn` }
+          urlToShare={ recipe.type === 'food' ? `http://localhost:3000/foods/${recipe.id}` : `http://localhost:3000/drinks/${recipe.id}` }
+        />
       </div>
     ));
   }
