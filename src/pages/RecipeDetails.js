@@ -14,6 +14,8 @@ function RecipeDetails({ match: { params: { id }, path } }) {
   const [loading, setLoading] = useState(true);
   const [objKey, setObjKey] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
+  const [recipeUrl, setRecipeUrl] = useState('');
+  console.log(recipeInfo[0]);
 
   useEffect(() => {
     const requestApi = async () => {
@@ -22,11 +24,13 @@ function RecipeDetails({ match: { params: { id }, path } }) {
         const recipe = await getFoodsFromAPI(API_FOODS_URL, 'lookup.php?i=', id);
         setRecipeInfo(recipe);
         setLoading(false);
+        setRecipeUrl(`http://localhost:3000/foods/${recipeInfo[0].idMeal}`);
       } else {
         setObjKey('Drink');
         const recipe = await getFoodsFromAPI(API_COCKTAILS_URL, 'lookup.php?i=', id);
         setRecipeInfo(recipe);
         setLoading(false);
+        setRecipeUrl(`http://localhost:3000/drinks/${recipeInfo[0].idDrink}`);
       }
     };
     requestApi();
@@ -50,7 +54,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
           alt=""
         />
         <h2 data-testid="recipe-title">{ recipeInfo[0][`str${objKey}`] }</h2>
-        <ShareBtn />
+        <ShareBtn urlToShare="aaaaaaaaaa" />
 
         <FavoriteBtn recipeInfo={ recipeInfo[0] } recipeType={ objKey } />
         <p data-testid="recipe-category">
