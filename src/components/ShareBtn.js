@@ -1,9 +1,10 @@
 import React, { useState } from 'react';// { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { INDEX_PROGRESS_URL } from '../helpers/constants';
+import shareBtnIcon from '../images/shareIcon.svg';
 
-function ShareBtn({ inProgress }) {
+function ShareBtn({ dataTestId, urlToShare, inProgress }) {
   const [onClipboard, setOnClipboard] = useState(false);
   const history = useHistory();
   const urlEndpoint = history.location.pathname;
@@ -11,21 +12,21 @@ function ShareBtn({ inProgress }) {
   const urlToClipboard = !inProgress ? url
     : url.substring(url.length - INDEX_PROGRESS_URL, 0);
 
-  // console.log(url.substring(url.length - DOZE, 0));
   const handleClick = () => {
-    navigator.clipboard.writeText(urlToClipboard);
-    // global.alert('Link copied!');
+    console.log(!urlToShare ? url : urlToShare);
+    navigator.clipboard.writeText(!urlToShare ? urlToClipboard : urlToShare);
     setOnClipboard(true);
   };
 
   return (
     <div>
       <button
-        data-testid="share-btn"
+        data-testid={ dataTestId }
         type="button"
         onClick={ () => handleClick() }
+        src={ shareBtnIcon }
       >
-        Compartilhar
+        <img src={ shareBtnIcon } alt="Share button" />
       </button>
       {onClipboard && (<p>Link copied!</p>)}
     </div>
@@ -34,10 +35,14 @@ function ShareBtn({ inProgress }) {
 
 ShareBtn.defaultProps = {
   inProgress: false,
+  dataTestId: 'share-btn',
+  urlToShare: null,
 };
 
 ShareBtn.propTypes = {
   inProgress: PropTypes.bool,
+  dataTestId: PropTypes.string,
+  urlToShare: PropTypes.string,
 };
 
 export default ShareBtn;
