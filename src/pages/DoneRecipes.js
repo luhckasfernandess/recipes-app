@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import ShareBtn from '../components/ShareBtn';
 
-const doneRecipesObj = JSON.parse(localStorage.getItem('doneRecipes'));
 // const doneRecipesObj = [{
 //   id: '52977',
 //   type: 'food',
@@ -16,12 +15,19 @@ const doneRecipesObj = JSON.parse(localStorage.getItem('doneRecipes'));
 // }];
 
 export default function DoneRecipes() {
-  // console.log(doneRecipesObj[0].doneDate);
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [displayedRecipes, setDisplayedRecipes] = useState([]);
+
+  useEffect(() => {
+    const doneRecipesObj = JSON.parse(localStorage.getItem('doneRecipes'));
+    setDoneRecipes(doneRecipesObj);
+    setDisplayedRecipes(doneRecipesObj);
+  }, []);
 
   let recipes = <p>{'You haven\'t done any recipes yet'}</p>;
 
-  if (doneRecipesObj) {
-    recipes = doneRecipesObj.map((recipe, index) => (
+  if (displayedRecipes.length > 0) {
+    recipes = displayedRecipes.map((recipe, index) => (
       <div key={ recipe.id }>
         <h3 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h3>
         <img
@@ -69,13 +75,45 @@ export default function DoneRecipes() {
     ));
   }
 
+  const showAll = () => {
+    const allRecipes = doneRecipes;
+    setDisplayedRecipes(allRecipes);
+  };
+
+  const showFoods = () => {
+    const foodRecipes = doneRecipes.filter((recipe) => recipe.type === 'food');
+    setDisplayedRecipes(foodRecipes);
+  };
+
+  const showDrinks = () => {
+    const drinkRecipes = doneRecipes.filter((recipe) => recipe.type === 'drink');
+    setDisplayedRecipes(drinkRecipes);
+  };
+
   return (
     <div className="done-recipes">
       <Header page="Done Recipes" />
-      <button type="button" data-testid="filter-by-all-btn">All</button>
-      <button type="button" data-testid="filter-by-food-btn">Food</button>
-      <button type="button" data-testid="filter-by-drink-btn">Drink</button>
-      <button type="button" data-testid="filter-by-all-btn">All</button>
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        onClick={ showAll }
+      >
+        All
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-food-btn"
+        onClick={ showFoods }
+      >
+        Food
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+        onClick={ showDrinks }
+      >
+        Drink
+      </button>
       {recipes}
     </div>
   );
