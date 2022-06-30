@@ -27,18 +27,18 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
   //   tags: recipeInfo.strTags === null ? [] : recipeInfo.strTags.split(', '),
   // };
 
-  const ingredientsList = Object.entries(recipeInfo)
-    .filter((entry) => entry[1] !== null && entry[1] !== '' && entry[1] !== ' ')
-    .filter((entry) => entry[0].includes('strIngredient'))
-    .reduce((acc, curr) => {
-      acc = [...acc, curr[1]];
-      return acc;
-    }, []);
+  const ingredientsList = [];
+  // Object.entries(recipeInfo)
+  //   .filter((entry) => entry[1] !== null && entry[1] !== '' && entry[1] !== ' ')
+  //   .filter((entry) => entry[0].includes('strIngredient'))
+  //   .reduce((acc, curr) => {
+  //     acc = [...acc, curr[1]];
+  //     return acc;
+  //   }, []);
 
   const generateInProgressListItem = () => {
     let newItem = {};
-
-    console.log(ingredientsList);
+    // console.log(ingredientsList);
     if (recipeType === 'Meal') {
       newItem = {
         [recipeInfo.idMeal]: ingredientsList,
@@ -55,6 +55,8 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
   const newItem = generateInProgressListItem();
   let inProgressRecipesNovo;
   if (recipeType === 'Meal') {
+    console.log(inProgressRecipes);
+
     inProgressRecipesNovo = {
       ...inProgressRecipes,
       meals: { ...inProgressRecipes.meals, ...newItem } };

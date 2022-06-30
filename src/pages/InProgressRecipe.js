@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import RecipesContext from '../context/RecipesContext';
 import getFoodsFromAPI from '../helpers/fetchers';
 import { API_FOODS_URL, API_COCKTAILS_URL } from '../helpers/constants';
 import ShareBtn from '../components/ShareBtn';
@@ -7,6 +8,7 @@ import FavoriteBtn from '../components/FavoriteBtn';
 import Ingredients from '../components/Ingredients';
 
 function InProgressRecipe({ match: { params: { id }, path } }) {
+  const { checkedCheckboxes, setCheckedCheckboxes } = useContext(RecipesContext);
   const [loading, setLoading] = useState(true);
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [objKey, setObjKey] = useState('');
@@ -26,7 +28,10 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
       }
     };
     requestApi();
+    setCheckedCheckboxes({});
   }, []);
+
+  console.log('chckbx obj', checkedCheckboxes);
 
   return (
     loading ? <p>Loading . . .</p> : (
@@ -46,6 +51,7 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
           data-testid="finish-recipe-btn"
           type="button"
           onClick={ () => console.log('cliquei') }
+          disabled={ !Object.values(checkedCheckboxes).every((box) => box === true) }
         >
           Finish Recipe
         </button>
