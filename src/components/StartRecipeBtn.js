@@ -55,7 +55,7 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
   const newItem = generateInProgressListItem();
   let inProgressRecipesNovo;
   if (recipeType === 'Meal') {
-    console.log(inProgressRecipes);
+    // console.log(inProgressRecipes);
 
     inProgressRecipesNovo = {
       ...inProgressRecipes,

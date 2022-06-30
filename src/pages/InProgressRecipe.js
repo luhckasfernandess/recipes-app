@@ -3,7 +3,8 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import getFoodsFromAPI from '../helpers/fetchers';
-import { API_FOODS_URL, API_COCKTAILS_URL } from '../helpers/constants';
+import { API_FOODS_URL, API_COCKTAILS_URL,
+  assembleDoneRecipe } from '../helpers/constants';
 import ShareBtn from '../components/ShareBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
 import Ingredients from '../components/Ingredients';
@@ -32,22 +33,18 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
       }
     };
     requestApi();
-    // setCheckedCheckboxes({});
   }, []);
 
-  console.log('chckbx obj', checkedCheckboxes);
   const handleLocalStorageObj = (storeObj) => {
-    console.log('storeObj', storeObj);
     let newObj;
     const updatedIngredients = Object.keys(checkedCheckboxes)
       .filter((ingr) => checkedCheckboxes[ingr]);
-    // console.log('updatedIngredients', updatedIngredients);
-    // const recipeObj = { [id]: updatedIngredients };
-    // console.log('recipeObj', recipeObj);
     if (objKey === 'Meal') {
       newObj = {
         ...storeObj,
-        meals: { ...storeObj.meals, [id]: updatedIngredients },
+        meals: { ...storeObj.meals,
+          [id]: [...storeObj.meals[id], updatedIngredients],
+        },
       };
       console.log('newObj', newObj);
       return localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
@@ -55,7 +52,9 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
     if (objKey === 'Drink') {
       newObj = {
         ...storeObj,
-        cocktails: { ...storeObj.cocktails, [id]: updatedIngredients },
+        cocktails: { ...storeObj.cocktails,
+          [id]: [...storeObj.cocktails[id], updatedIngredients],
+        },
       };
       return localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
     }
@@ -66,12 +65,14 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
     if (localStorage.getItem('inProgressRecipes')) {
       localStorageObj = JSON.parse(localStorage.getItem('inProgressRecipes'));
     }
-    // console.log('localStorageObj', localStorageObj);
     handleLocalStorageObj(localStorageObj);
   }, [checkedCheckboxes]);
 
   const handleClick = () => {
     history.push('/done-recipes');
+    const doneDate = new Date().toLocaleDateString();
+    console.log('doneDate', doneDate);
+    assembleDoneRecipe(recipeInfo, objKey, doneDate);
   };
 
   return (

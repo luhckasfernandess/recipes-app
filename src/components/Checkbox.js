@@ -7,15 +7,6 @@ function Checkbox({ ingredient, measurement, index, id, typeOfRecipe }) {
 
   const [checked, setChecked] = useState(true);
 
-  const handleList = () => {
-    const newCheckedList = {
-      ...checkedCheckboxes,
-      [ingredient]: !checked,
-    };
-    setCheckedCheckboxes(newCheckedList);
-    console.log(newCheckedList);
-  };
-
   useEffect(() => {
     // console.log(id);
     // console.log(typeOfRecipe);
@@ -23,18 +14,27 @@ function Checkbox({ ingredient, measurement, index, id, typeOfRecipe }) {
     if (localStorage.getItem('inProgressRecipes')) {
       localStorageObj = JSON.parse(localStorage.getItem('inProgressRecipes'));
       if (localStorageObj[typeOfRecipe] && localStorageObj[typeOfRecipe][id]) {
-        console.log('localStorageObj-type-id', localStorageObj[typeOfRecipe][id]
-          .includes(ingredient));
+        // console.log('localStorageObj-type-id', localStorageObj[typeOfRecipe][id]
+        //   .includes(ingredient));
         setChecked(localStorageObj[typeOfRecipe][id].includes(ingredient));
+        setCheckedCheckboxes({
+          ...checkedCheckboxes,
+          [ingredient]: localStorageObj[typeOfRecipe][id].includes(ingredient),
+        });
       }
     }
   }, []);
 
-  console.log(id, typeOfRecipe);
+  // console.log(id, typeOfRecipe);
 
   const handleChange = () => {
     setChecked(!checked);
-    handleList();
+    const newCheckedList = {
+      ...checkedCheckboxes,
+      [ingredient]: !checked,
+    };
+    setCheckedCheckboxes(newCheckedList);
+    // console.log(newCheckedList);
   };
 
   return (
