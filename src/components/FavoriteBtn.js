@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-function FavoriteBtn({ recipeInfo, recipeType, short, index }) {
+function FavoriteBtn({ recipeInfo, recipeType, short, index, buttonFunction }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const favoritesList = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
 
@@ -36,8 +36,6 @@ function FavoriteBtn({ recipeInfo, recipeType, short, index }) {
 
   useEffect(() => {}, [isFavorite]);
 
-  console.log(thisRecipe);
-
   const handleClick = () => {
     console.log('clicou!');
     let newFavoritesList;
@@ -55,7 +53,7 @@ function FavoriteBtn({ recipeInfo, recipeType, short, index }) {
   return (
     <button
       type="button"
-      onClick={ () => handleClick() }
+      onClick={ short ? buttonFunction : () => handleClick() }
     >
       Favoritar
       <img
@@ -70,6 +68,7 @@ function FavoriteBtn({ recipeInfo, recipeType, short, index }) {
 FavoriteBtn.defaultProps = {
   short: false,
   index: 0,
+  buttonFunction: () => console.log('nothing'),
 };
 
 FavoriteBtn.propTypes = {
@@ -77,6 +76,7 @@ FavoriteBtn.propTypes = {
   recipeType: PropTypes.string.isRequired,
   short: PropTypes.bool,
   index: PropTypes.number,
+  buttonFunction: PropTypes.func,
 };
 
 export default FavoriteBtn;

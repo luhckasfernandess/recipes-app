@@ -28,6 +28,19 @@ export default function DoneRecipes({ page }) {
     setDisplayedRecipes(doneRecipesObj);
   }, []);
 
+  useEffect(() => {
+    const doneRecipesObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    setDoneRecipes(doneRecipesObj);
+  }, [displayedRecipes]);
+
+  const handleClick = (recipeId) => {
+    console.log(doneRecipes);
+    const newDoneRecipes = doneRecipes.filter((recipe) => recipe.id !== recipeId);
+    console.log(newDoneRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newDoneRecipes));
+    setDisplayedRecipes(newDoneRecipes);
+  };
+
   const verb = page === 'done' ? 'done' : 'favorited';
   let recipes = <p>{`You haven't ${verb} any recipes yet`}</p>;
 
@@ -92,6 +105,7 @@ export default function DoneRecipes({ page }) {
               recipeType={ recipe.type }
               short
               index={ index }
+              buttonFunction={ () => handleClick(recipe.id) }
             />)}
       </div>
     ));
