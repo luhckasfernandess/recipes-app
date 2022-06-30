@@ -29,13 +29,15 @@ export default function DoneRecipes() {
   if (displayedRecipes.length > 0) {
     recipes = displayedRecipes.map((recipe, index) => (
       <div key={ recipe.id }>
-        <h3 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h3>
-        <img
-          src={ recipe.image }
-          alt="imagem"
-          className="recipe-photo"
-          data-testid={ `${index}-horizontal-image` }
-        />
+        <a href={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }>
+          <h3 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h3>
+          <img
+            src={ recipe.image }
+            alt="imagem"
+            className="recipe-photo"
+            data-testid={ `${index}-horizontal-image` }
+          />
+        </a>
         {recipe.type === 'food' ? (
           <p>
             <span>Category: </span>
