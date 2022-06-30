@@ -14,7 +14,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
   const [loading, setLoading] = useState(true);
   const [objKey, setObjKey] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
-  console.log(recipeInfo[0]);
+  // console.log(recipeInfo[0]);
 
   useEffect(() => {
     const requestApi = async () => {

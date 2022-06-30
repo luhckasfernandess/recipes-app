@@ -81,6 +81,7 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
           alt="imagem da receita"
           src={ recipeInfo[0][`str${objKey}Thumb`] }
           data-testid="recipe-photo"
+          className="recipe-photo"
         />
         <h3 data-testid="recipe-title">{ recipeInfo[0][`str${objKey}`] }</h3>
         <ShareBtn inProgress />

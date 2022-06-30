@@ -5,8 +5,16 @@ import RecipesContext from '../context/RecipesContext';
 function Checkbox({ ingredient, measurement, index, id, typeOfRecipe }) {
   const { checkedCheckboxes, setCheckedCheckboxes } = useContext(RecipesContext);
 
-  const [checked, setChecked] = useState(false);
-  const [apiResponse, setApiResponse] = useState('');
+  const [checked, setChecked] = useState(true);
+
+  const handleList = () => {
+    const newCheckedList = {
+      ...checkedCheckboxes,
+      [ingredient]: !checked,
+    };
+    setCheckedCheckboxes(newCheckedList);
+    console.log(newCheckedList);
+  };
 
   useEffect(() => {
     // console.log(id);
@@ -14,27 +22,19 @@ function Checkbox({ ingredient, measurement, index, id, typeOfRecipe }) {
     let localStorageObj;
     if (localStorage.getItem('inProgressRecipes')) {
       localStorageObj = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (localStorageObj[typeOfRecipe] && localStorageObj[typeOfRecipe][id]) {
+        console.log('localStorageObj-type-id', localStorageObj[typeOfRecipe][id]
+          .includes(ingredient));
+        setChecked(localStorageObj[typeOfRecipe][id].includes(ingredient));
+      }
     }
-    setApiResponse(localStorageObj);
   }, []);
 
-  useEffect(() => {
-    console.log(id, typeOfRecipe);
-    console.log(apiResponse);
-    localStorage.setItem('inProgressRecipes', JSON.stringify(apiResponse));
-  }, [apiResponse]);
-
-  useEffect(() => {
-    const newCheckedList = {
-      ...checkedCheckboxes,
-      [ingredient]: checked,
-    };
-    setCheckedCheckboxes(newCheckedList);
-    console.log(newCheckedList);
-  }, [checked]);
+  console.log(id, typeOfRecipe);
 
   const handleChange = () => {
     setChecked(!checked);
+    handleList();
   };
 
   return (
@@ -45,6 +45,7 @@ function Checkbox({ ingredient, measurement, index, id, typeOfRecipe }) {
           type="checkbox"
           name={ ingredient }
           defaultChecked={ checked }
+          checked={ checked }
           onChange={ () => handleChange() }
         />
         {` ${measurement} - ${ingredient}`}
