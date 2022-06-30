@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import getFoodsFromAPI from '../helpers/fetchers';
@@ -9,9 +10,12 @@ import Ingredients from '../components/Ingredients';
 
 function InProgressRecipe({ match: { params: { id }, path } }) {
   const { checkedCheckboxes, setCheckedCheckboxes } = useContext(RecipesContext);
+
   const [loading, setLoading] = useState(true);
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [objKey, setObjKey] = useState('');
+
+  const history = useHistory();
 
   useEffect(() => {
     const requestApi = async () => {
@@ -33,6 +37,10 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
 
   console.log('chckbx obj', checkedCheckboxes);
 
+  const handleClick = () => {
+    history.push('/done-recipes');
+  };
+
   return (
     loading ? <p>Loading . . .</p> : (
       <div>
@@ -50,7 +58,7 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
         <button
           data-testid="finish-recipe-btn"
           type="button"
-          onClick={ () => console.log('cliquei') }
+          onClick={ () => handleClick() }
           disabled={ !Object.values(checkedCheckboxes).every((box) => box === true) }
         >
           Finish Recipe
