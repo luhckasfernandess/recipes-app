@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from './Checkbox';
 
-function Ingredients({ recipeInfo, inProgress }) {
+function Ingredients({ recipeInfo, inProgress, recipeType }) {
   const [ingredients, setIngredients] = useState([]);
   const [measurements, setMeasurements] = useState([]);
 
@@ -50,6 +50,8 @@ function Ingredients({ recipeInfo, inProgress }) {
             ingredients.map((ingredient, index) => (
               <Checkbox
                 key={ `${index}-${ingredient[1]}` }
+                id={ recipeInfo[0][`id${recipeType}`] }
+                typeOfRecipe={ recipeType === 'Meal' ? 'meals' : 'cocktails' }
                 ingredient={ ingredient[1] }
                 measurement={ measurements[index][1] }
                 index={ index }
@@ -64,11 +66,13 @@ function Ingredients({ recipeInfo, inProgress }) {
 
 Ingredients.defaultProps = {
   inProgress: false,
+  recipeType: '',
 };
 
 Ingredients.propTypes = {
   recipeInfo: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   inProgress: PropTypes.bool,
+  recipeType: PropTypes.string,
 };
 
 export default Ingredients;

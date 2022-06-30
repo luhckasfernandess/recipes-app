@@ -9,7 +9,7 @@ import FavoriteBtn from '../components/FavoriteBtn';
 import Ingredients from '../components/Ingredients';
 
 function InProgressRecipe({ match: { params: { id }, path } }) {
-  const { checkedCheckboxes, setCheckedCheckboxes } = useContext(RecipesContext);
+  const { checkedCheckboxes } = useContext(RecipesContext);
 
   const [loading, setLoading] = useState(true);
   const [recipeInfo, setRecipeInfo] = useState([]);
@@ -32,10 +32,43 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
       }
     };
     requestApi();
-    setCheckedCheckboxes({});
+    // setCheckedCheckboxes({});
   }, []);
 
   console.log('chckbx obj', checkedCheckboxes);
+  const handleLocalStorageObj = (storeObj) => {
+    console.log('storeObj', storeObj);
+    let newObj;
+    const updatedIngredients = Object.keys(checkedCheckboxes)
+      .filter((ingr) => checkedCheckboxes[ingr]);
+    // console.log('updatedIngredients', updatedIngredients);
+    // const recipeObj = { [id]: updatedIngredients };
+    // console.log('recipeObj', recipeObj);
+    if (objKey === 'Meal') {
+      newObj = {
+        ...storeObj,
+        meals: { ...storeObj.meals, [id]: updatedIngredients },
+      };
+      console.log('newObj', newObj);
+      return localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+    }
+    if (objKey === 'Drink') {
+      newObj = {
+        ...storeObj,
+        cocktails: { ...storeObj.cocktails, [id]: updatedIngredients },
+      };
+      return localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+    }
+  };
+
+  useEffect(() => {
+    let localStorageObj;
+    if (localStorage.getItem('inProgressRecipes')) {
+      localStorageObj = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    }
+    // console.log('localStorageObj', localStorageObj);
+    handleLocalStorageObj(localStorageObj);
+  }, [checkedCheckboxes]);
 
   const handleClick = () => {
     history.push('/done-recipes');
@@ -53,7 +86,7 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
         <ShareBtn inProgress />
         <FavoriteBtn recipeInfo={ recipeInfo[0] } recipeType={ objKey } />
         <h5 data-testid="recipe-category">{ recipeInfo[0].strCategory }</h5>
-        <Ingredients recipeInfo={ recipeInfo } inProgress />
+        <Ingredients recipeInfo={ recipeInfo } recipeType={ objKey } inProgress />
         <p data-testid="instructions">{recipeInfo[0].strInstructions}</p>
         <button
           data-testid="finish-recipe-btn"
