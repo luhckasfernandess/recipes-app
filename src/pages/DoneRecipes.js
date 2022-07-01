@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import ShareBtn from '../components/ShareBtn';
+import FavoriteBtn from '../components/FavoriteBtn';
 
 // const doneRecipesObj = [{
 //   id: '52977',
@@ -14,17 +16,33 @@ import ShareBtn from '../components/ShareBtn';
 //   tags: ['Soup', 'Teste', 'Excluir', 'Excluir também'],
 // }];
 
-export default function DoneRecipes() {
+export default function DoneRecipes({ page }) {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
 
   useEffect(() => {
-    const doneRecipesObj = JSON.parse(localStorage.getItem('doneRecipes'));
+    console.log(page);
+    const doneRecipesObj = JSON.parse(localStorage.getItem(page === 'done'
+      ? 'doneRecipes' : 'favoriteRecipes'));
     setDoneRecipes(doneRecipesObj);
     setDisplayedRecipes(doneRecipesObj);
   }, []);
 
-  let recipes = <p>{'You haven\'t done any recipes yet'}</p>;
+  useEffect(() => {
+    const doneRecipesObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    setDoneRecipes(doneRecipesObj);
+  }, [displayedRecipes]);
+
+  const handleClick = (recipeId) => {
+    console.log(doneRecipes);
+    const newDoneRecipes = doneRecipes.filter((recipe) => recipe.id !== recipeId);
+    console.log(newDoneRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newDoneRecipes));
+    setDisplayedRecipes(newDoneRecipes);
+  };
+
+  const verb = page === 'done' ? 'done' : 'favorited';
+  let recipes = <p>{`You haven't ${verb} any recipes yet`}</p>;
 
   if (displayedRecipes.length > 0) {
     recipes = displayedRecipes.map((recipe, index) => (
@@ -54,25 +72,41 @@ export default function DoneRecipes() {
               </span>
             </p>
           ) }
-        <p>
-          <span>Done in: </span>
-          <span data-testid={ `${index}-horizontal-done-date` }>{ recipe.doneDate }</span>
-        </p>
-        <p>
-          <span>Tags: </span>
-          { recipe.tags.splice(0, 2).map((tag) => (
-            <span
-              key={ tag }
-              data-testid={ `${index}-${tag}-horizontal-tag` }
-            >
-              {`${tag}, `}
-            </span>
-          ))}
-        </p>
+        { page === 'done' && (
+          <>
+            <p>
+              <span>Done in: </span>
+              <span
+                data-testid={ `${index}-horizontal-done-date` }
+              >
+                { recipe.doneDate }
+              </span>
+            </p>
+            <p>
+              <span>Tags: </span>
+              { recipe.tags.splice(0, 2).map((tag) => (
+                <span
+                  key={ tag }
+                  data-testid={ `${index}-${tag}-horizontal-tag` }
+                >
+                  {`${tag}, `}
+                </span>
+              ))}
+            </p>
+          </>)}
         <ShareBtn
           dataTestId={ `${index}-horizontal-share-btn` }
           urlToShare={ recipe.type === 'food' ? `http://localhost:3000/foods/${recipe.id}` : `http://localhost:3000/drinks/${recipe.id}` }
         />
+        {page === 'fav'
+          && (
+            <FavoriteBtn
+              recipeInfo={ recipe }
+              recipeType={ recipe.type }
+              short
+              index={ index }
+              buttonFunction={ () => handleClick(recipe.id) }
+            />)}
       </div>
     ));
   }
@@ -94,7 +128,7 @@ export default function DoneRecipes() {
 
   return (
     <div className="done-recipes">
-      <Header page="Done Recipes" />
+      <Header page={ page === 'done' ? 'Done Recipes' : 'Favorite Recipes' } />
       <button
         type="button"
         data-testid="filter-by-all-btn"
@@ -120,3 +154,7 @@ export default function DoneRecipes() {
     </div>
   );
 }
+
+DoneRecipes.propTypes = {
+  page: PropTypes.string.isRequired,
+};

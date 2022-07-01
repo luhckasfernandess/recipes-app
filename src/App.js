@@ -16,7 +16,7 @@ import ExpFoodsIng from './pages/ExpFoodsIng';
 import ExploreDrinks from './pages/ExploreDrinks';
 import ExpDrinksIng from './pages/ExpDrinksIng';
 import DoneRecipes from './pages/DoneRecipes';
-import Favorites from './pages/Favorites';
+// import Favorites from './pages/Favorites';
 import RecipeDetails from './pages/RecipeDetails';
 import InProgressRecipe from './pages/InProgressRecipe';
 
@@ -38,8 +38,16 @@ function App() {
         <Route exact path="/explore/drinks" component={ ExploreDrinks } />
         <Route exact path="/explore/drinks/ingredients" component={ ExpDrinksIng } />
         <Route exact path="/profile" component={ Profile } />
-        <Route exact path="/done-recipes" component={ DoneRecipes } />
-        <Route exact path="/favorite-recipes" component={ Favorites } />
+        <Route
+          exact
+          path="/done-recipes"
+          render={ (props) => <DoneRecipes { ...props } page="done" /> }
+        />
+        <Route
+          exact
+          path="/favorite-recipes"
+          render={ (props) => <DoneRecipes { ...props } page="fav" /> }
+        />
       </Switch>
     </RecipesProvider>
   );
