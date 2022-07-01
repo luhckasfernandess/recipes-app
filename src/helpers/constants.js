@@ -23,3 +23,44 @@ export const assembleDoneRecipe = (recipeInfo, objKey, doneDate) => {
   };
   localStorage.setItem('doneRecipes', JSON.stringify(doneRecipe));
 };
+
+export const assembleNewObj = (obj) => obj.reduce((acc, curr) => {
+  acc = {
+    ...acc,
+    [curr]: true,
+  };
+  return acc;
+}, {});
+
+export const handleLocalStorageObj = (storeObj, objKey, id, checkedCheckboxes) => {
+  let newObj;
+  const updatedIngredients = Object.keys(checkedCheckboxes)
+    .filter((ingr) => checkedCheckboxes[ingr]);
+  if (objKey === 'Meal') {
+    newObj = {
+      ...storeObj,
+      meals: { ...storeObj.meals,
+        [id]: updatedIngredients,
+      },
+    };
+    return localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+  }
+  if (objKey === 'Drink') {
+    newObj = {
+      ...storeObj,
+      cocktails: { ...storeObj.cocktails,
+        [id]: updatedIngredients,
+      },
+    };
+    return localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+  }
+};
+
+export const genNewLocal = (currStorage, type, id) => {
+  const newObj = { [type]: { [id]: [] } };
+  if (currStorage) {
+    const updatedStorage = { ...currStorage, [type]: { [id]: [] } };
+    return localStorage.setItem('inProgressRecipes', JSON.stringify(updatedStorage));
+  }
+  return localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+};
