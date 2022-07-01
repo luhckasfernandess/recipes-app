@@ -37,7 +37,7 @@ function FavoriteBtn({ recipeInfo, recipeType, short, index, buttonFunction }) {
   useEffect(() => {}, [isFavorite]);
 
   const handleClick = () => {
-    console.log('clicou!');
+    // console.log('clicou!');
     let newFavoritesList;
     if (isFavorite) {
       newFavoritesList = favoritesList

@@ -27,18 +27,18 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
   //   tags: recipeInfo.strTags === null ? [] : recipeInfo.strTags.split(', '),
   // };
 
-  const ingredientsList = Object.entries(recipeInfo)
-    .filter((entry) => entry[1] !== null && entry[1] !== '' && entry[1] !== ' ')
-    .filter((entry) => entry[0].includes('strIngredient'))
-    .reduce((acc, curr) => {
-      acc = [...acc, curr[1]];
-      return acc;
-    }, []);
-
-  // console.log(ingredientsList);...inProgressRecipes,
+  const ingredientsList = [];
+  // Object.entries(recipeInfo)
+  //   .filter((entry) => entry[1] !== null && entry[1] !== '' && entry[1] !== ' ')
+  //   .filter((entry) => entry[0].includes('strIngredient'))
+  //   .reduce((acc, curr) => {
+  //     acc = [...acc, curr[1]];
+  //     return acc;
+  //   }, []);
 
   const generateInProgressListItem = () => {
     let newItem = {};
+    // console.log(ingredientsList);
     if (recipeType === 'Meal') {
       newItem = {
         [recipeInfo.idMeal]: ingredientsList,
@@ -51,10 +51,12 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
     return newItem;
   };
 
-  console.log(inProgressRecipes);
+  // console.log(inProgressRecipes);
   const newItem = generateInProgressListItem();
   let inProgressRecipesNovo;
   if (recipeType === 'Meal') {
+    // console.log(inProgressRecipes);
+
     inProgressRecipesNovo = {
       ...inProgressRecipes,
       meals: { ...inProgressRecipes.meals, ...newItem } };
@@ -63,7 +65,7 @@ function StartRecipeBtn({ recipeInfo, recipeType }) {
       ...inProgressRecipes,
       cocktails: { ...inProgressRecipes.cocktails, ...newItem } };
   }
-  console.log(inProgressRecipesNovo);
+  // console.log(inProgressRecipesNovo);
 
   let recipeStarted = false;
   if (recipeType === 'Meal') {

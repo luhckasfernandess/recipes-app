@@ -14,7 +14,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
   const [loading, setLoading] = useState(true);
   const [objKey, setObjKey] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
-  console.log(recipeInfo[0]);
+  // console.log(recipeInfo[0]);
 
   useEffect(() => {
     const requestApi = async () => {
@@ -52,7 +52,6 @@ function RecipeDetails({ match: { params: { id }, path } }) {
         />
         <h2 data-testid="recipe-title">{ recipeInfo[0][`str${objKey}`] }</h2>
         <ShareBtn />
-
         <FavoriteBtn recipeInfo={ recipeInfo[0] } recipeType={ objKey } />
         <p data-testid="recipe-category">
           { objKey === 'Drink' ? recipeInfo[0].strAlcoholic : recipeInfo[0].strCategory }

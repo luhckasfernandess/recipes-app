@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Checkbox from './Checkbox';
 
-function Ingredients({ recipeInfo }) {
+function Ingredients({ recipeInfo, inProgress, recipeType, setIngredientsLength }) {
   const [ingredients, setIngredients] = useState([]);
   const [measurements, setMeasurements] = useState([]);
 
   useEffect(() => {
     let ingredientsList;
     let measurementsList;
-    if (recipeInfo.length > 0) {
+    if (recipeInfo.length) {
       ingredientsList = Object.entries(recipeInfo[0])
         .filter((entry) => entry[1] !== null && entry[1] !== '' && entry[1] !== ' ')
         .filter((entry) => entry[0].includes('strIngredient'));
@@ -16,12 +17,10 @@ function Ingredients({ recipeInfo }) {
         .filter((entry) => entry[1] !== null && entry[1] !== '' && entry[1] !== ' ')
         .filter((entry) => entry[0].includes('strMeasure'));
     }
-    // console.log(recipeInfo[0]);
-    // console.log(ingredientsList);
-    // console.log(measurementsList);
     setMeasurements(measurementsList);
     setIngredients(ingredientsList);
-  }, [recipeInfo]);
+    setIngredientsLength(ingredientsList.length);
+  }, [recipeInfo, inProgress]);
 
   useEffect(() => {
     if (ingredients.length !== measurements.length) {
@@ -33,23 +32,47 @@ function Ingredients({ recipeInfo }) {
   return (
     ingredients.length !== measurements.length ? <p>loading . . .</p> : (
       <div>
-        <ul>
-          {ingredients.map((ingredient, index) => (
-            <li
-              key={ `${index}-${ingredient[1]}` }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {`${measurements[index][1]} - ${ingredient[1]}`}
-            </li>
-          ))}
-        </ul>
+        {
+          !inProgress ? (
+            <ul>
+              {ingredients.map((ingredient, index) => (
+                <li
+                  key={ `${index}-${ingredient[1]}` }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${measurements[index][1]} - ${ingredient[1]}`}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            ingredients.map((ingredient, index) => (
+              <Checkbox
+                key={ `${index}-${ingredient[1]}` }
+                id={ recipeInfo[0][`id${recipeType}`] }
+                typeOfRecipe={ recipeType === 'Meal' ? 'meals' : 'cocktails' }
+                ingredient={ ingredient[1] }
+                measurement={ measurements[index][1] }
+                index={ index }
+              />
+            ))
+          )
+        }
       </div>
     )
   );
 }
 
+Ingredients.defaultProps = {
+  inProgress: false,
+  recipeType: '',
+  setIngredientsLength: () => {},
+};
+
 Ingredients.propTypes = {
   recipeInfo: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  inProgress: PropTypes.bool,
+  recipeType: PropTypes.string,
+  setIngredientsLength: PropTypes.func,
 };
 
 export default Ingredients;
