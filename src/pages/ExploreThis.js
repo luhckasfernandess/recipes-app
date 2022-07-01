@@ -24,13 +24,6 @@ export default function ExploreThis() {
     fetchApi();
   }, []);
 
-  // const handleClick = () => {
-  //   // history.push(`/${type}/${randomId}`);
-  //   const randomRecipeUrl = `/${type}/${randomId}`;
-  //   console.log(randomRecipeUrl);
-  //   history.push(randomRecipeUrl);
-  // };
-
   return (
     <div className={ `explore-${type}` }>
       <Header page={ `Explore ${type === 'foods' ? 'Foods' : 'Drinks'}` } />
