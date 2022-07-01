@@ -7,7 +7,8 @@ export default function Profile() {
   const history = useHistory();
 
   // Pega o email da pessoa no localStorage.
-  const userEmail = JSON.parse(localStorage.getItem('user')).email;
+  const userObject = JSON.parse(localStorage.getItem('user')) || { email: '' };
+  const userEmail = userObject.email;
 
   // Função de redirecionamento de página ao clicar no botão
   const redirectBtn = ({ target: { name } }) => {
