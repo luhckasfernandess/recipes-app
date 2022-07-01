@@ -16,20 +16,23 @@ import FavoriteBtn from '../components/FavoriteBtn';
 //   tags: ['Soup', 'Teste', 'Excluir', 'Excluir também'],
 // }];
 
+//   "doneDate":"Date('June 28, 2022 20:51:00')","tags":"['Soup', 'Teste', 'Excluir', 'Excluir também']"
+
 export default function DoneRecipes({ page }) {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
 
+  const storage = page === 'done' ? 'doneRecipes' : 'favoriteRecipes';
+
   useEffect(() => {
     console.log(page);
-    const doneRecipesObj = JSON.parse(localStorage.getItem(page === 'done'
-      ? 'doneRecipes' : 'favoriteRecipes'));
+    const doneRecipesObj = JSON.parse(localStorage.getItem(storage));
     setDoneRecipes(doneRecipesObj);
     setDisplayedRecipes(doneRecipesObj);
   }, []);
 
   useEffect(() => {
-    const doneRecipesObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const doneRecipesObj = JSON.parse(localStorage.getItem(storage));
     setDoneRecipes(doneRecipesObj);
   }, [displayedRecipes]);
 
@@ -41,10 +44,11 @@ export default function DoneRecipes({ page }) {
     setDisplayedRecipes(newDoneRecipes);
   };
 
-  const verb = page === 'done' ? 'done' : 'favorited';
-  let recipes = <p>{`You haven't ${verb} any recipes yet`}</p>;
+  // const verb = page === 'done' ? 'done' : 'favorited';
+  // let recipes = <p>{`You haven't ${verb} any recipes yet`}</p>;
+  let recipes = <p>Sorry. Nothing to show here...</p>;
 
-  if (displayedRecipes.length > 0) {
+  if (displayedRecipes?.length > 0) {
     recipes = displayedRecipes.map((recipe, index) => (
       <div key={ recipe.id }>
         <a href={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }>
@@ -82,17 +86,19 @@ export default function DoneRecipes({ page }) {
                 { recipe.doneDate }
               </span>
             </p>
-            <p>
-              <span>Tags: </span>
-              { recipe.tags.splice(0, 2).map((tag) => (
-                <span
-                  key={ tag }
-                  data-testid={ `${index}-${tag}-horizontal-tag` }
-                >
-                  {`${tag}, `}
-                </span>
-              ))}
-            </p>
+            { recipe.tags && (
+              <p>
+                <span>Tags: </span>
+                { recipe.tags.map((tag) => (
+                  <span
+                    key={ tag }
+                    data-testid={ `${index}-${tag}-horizontal-tag` }
+                  >
+                    {`${tag}, `}
+                  </span>
+                ))}
+              </p>
+            )}
           </>)}
         <ShareBtn
           dataTestId={ `${index}-horizontal-share-btn` }
