@@ -41,7 +41,7 @@ function InProgressRecipe({ match: { params: { id }, path } }) {
     const localStorageObj = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const type = path.includes('foods') ? 'meals' : 'cocktails';
     genNewLocal(localStorageObj, type, id);
-    if (localStorageObj?.[type]?.[id]) {
+    if (localStorageObj && localStorageObj[type] && localStorageObj[type][id]) {
       const updateBoxesObj = assembleNewObj(localStorageObj[type][id]);
       setCheckedCheckboxes(updateBoxesObj);
     }
