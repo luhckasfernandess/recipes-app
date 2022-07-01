@@ -48,7 +48,7 @@ export default function DoneRecipes({ page }) {
   // let recipes = <p>{`You haven't ${verb} any recipes yet`}</p>;
   let recipes = <p>Sorry. Nothing to show here...</p>;
 
-  if (displayedRecipes.length > 0) {
+  if (displayedRecipes?.length > 0) {
     recipes = displayedRecipes.map((recipe, index) => (
       <div key={ recipe.id }>
         <a href={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }>
