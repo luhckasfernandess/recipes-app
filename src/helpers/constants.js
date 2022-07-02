@@ -10,6 +10,9 @@ export const API_FOODS_URL = 'https://www.themealdb.com/api/json/v1/1/';
 export const API_COCKTAILS_URL = 'https://www.thecocktaildb.com/api/json/v1/1/';
 
 export const assembleDoneRecipe = (recipeInfo, objKey, doneDate) => {
+  const recipeTags = recipeInfo[0].strTags?.split(' ');
+  console.log(recipeInfo[0].strTags);
+
   const doneRecipe = {
     id: recipeInfo[0][`id${objKey}`],
     type: objKey === 'Meal' ? 'food' : 'drink',
@@ -19,9 +22,14 @@ export const assembleDoneRecipe = (recipeInfo, objKey, doneDate) => {
     name: recipeInfo[0][`str${objKey}`],
     image: recipeInfo[0][`str${objKey}Thumb`],
     doneDate,
-    tags: recipeInfo[0].strTags,
+    tags: recipeTags,
   };
-  localStorage.setItem('doneRecipes', JSON.stringify(doneRecipe));
+  console.log(doneRecipe);
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  console.log(doneRecipes);
+  doneRecipes.push(doneRecipe);
+  console.log(doneRecipes);
+  localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 };
 
 export const assembleNewObj = (obj) => obj.reduce((acc, curr) => {
