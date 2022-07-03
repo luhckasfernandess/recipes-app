@@ -9,6 +9,7 @@ function RecipesProvider({ children }) {
   const [recipeId, setRecipeId] = useState('');
   const [listedIngredients, setListedIngredients] = useState([]);
   const [checkedCheckboxes, setCheckedCheckboxes] = useState({});
+  const [filterByIng, setFilterByIng] = useState('');
 
   const contextValue = {
     mealsList,
@@ -23,6 +24,8 @@ function RecipesProvider({ children }) {
     setListedIngredients,
     checkedCheckboxes,
     setCheckedCheckboxes,
+    filterByIng,
+    setFilterByIng,
   };
 
   return (

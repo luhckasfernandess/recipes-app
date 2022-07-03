@@ -9,7 +9,8 @@ import getFoodsFromAPI from '../helpers/fetchers';
 import CategoryMenu from '../components/CategoryMenu';
 
 export default function Drinks() {
-  const { mealsList, setMealsList } = useContext(RecipesContext);
+  const { mealsList, setMealsList,
+    filterByIng, setFilterByIng } = useContext(RecipesContext);
   const history = useHistory();
 
   const condition = () => {
@@ -27,9 +28,10 @@ export default function Drinks() {
 
   useEffect(() => {
     // console.log('Carregou DRINKS');
+    const tag = filterByIng ? 'filter.php?i=' : 'search.php?s=';
     const defaultList = async () => {
-      const updatedList = await getFoodsFromAPI(API_COCKTAILS_URL, 'search.php?s=', '');
-      return setMealsList(updatedList);
+      const updatedList = await getFoodsFromAPI(API_COCKTAILS_URL, tag, filterByIng);
+      return setMealsList(updatedList) && setFilterByIng('');
     };
     defaultList();
   }, [setMealsList]);

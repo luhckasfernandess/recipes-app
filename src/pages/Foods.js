@@ -8,7 +8,8 @@ import getFoodsFromAPI from '../helpers/fetchers';
 import CategoryMenu from '../components/CategoryMenu';
 
 export default function Foods() {
-  const { mealsList, setMealsList } = useContext(RecipesContext);
+  const { mealsList, setMealsList,
+    filterByIng, setFilterByIng } = useContext(RecipesContext);
   const condition = () => {
     if (mealsList) {
       return mealsList.map((meal, index) => (
@@ -19,8 +20,10 @@ export default function Foods() {
   useEffect(() => {
     // console.log('Carregou FOODS');
     const defaultList = async () => {
-      const updatedList = await getFoodsFromAPI(API_FOODS_URL, 'search.php?s=', '');
+      const tag = filterByIng ? 'filter.php?i=' : 'search.php?s=';
+      const updatedList = await getFoodsFromAPI(API_FOODS_URL, tag, filterByIng);
       setMealsList(updatedList);
+      setFilterByIng('');
     };
     defaultList();
   }, [setMealsList]);
